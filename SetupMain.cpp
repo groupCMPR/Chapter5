@@ -4,7 +4,7 @@
 
 #include <iostream> //For cout
 #include "input.h"  //For input validation
-
+#include "Application.h"
 //HEADER FILES
 using namespace std;
 
@@ -12,13 +12,13 @@ using namespace std;
 int mainMenu();
 
 //Option 1 - Vector Container
-char vectorContainer();
+void vectorContainer();
 
 //Option 2 - List Container
-char listContainer();
+void listContainer();
 
 //Option 3 - Application using Vector and/or List container
-char vectorAndOrListContainer();
+void vectorAndOrListContainer();
 
 int main()
 {
@@ -57,7 +57,7 @@ int mainMenu()
 //==================================================================================================================
 // Option 1 - Vector container Section
 //================================================================================================================== 
-char vectorContainer()
+void vectorContainer()
 {
 	do
 	{
@@ -92,7 +92,7 @@ char vectorContainer()
 
 		switch (inputChar("\n\t\tOption: ", static_cast<string>("0ABCDEFGHIJKLMNOPQRS")))
 		{
-		case '0': return 0;
+		case '0': return;
 		case 'A': system("cls"); break;
 		case 'B': system("cls"); break;
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
@@ -100,14 +100,12 @@ char vectorContainer()
 		cout << "\n";
 		system("pause");
 	} while (true);
-
-	return 0;
 }
 
 //==================================================================================================================
 // Option 2 - List container Section
 //================================================================================================================== 
-char listContainer()
+void listContainer()
 {
 	do
 	{
@@ -143,7 +141,7 @@ char listContainer()
 
 		switch (inputChar("\n\t\tOption: ", static_cast<string>("0ABCDEFGHIJKLMNOPQRS")))
 		{
-		case '0': return 0;
+		case '0': return;
 		case 'A': system("cls"); break;
 		case 'B': system("cls"); break;
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
@@ -151,15 +149,14 @@ char listContainer()
 		cout << "\n";
 		system("pause");
 	} while (true);
-
-	return 0;
 }
 
 //==================================================================================================================
 // Option 3 - Application using Vector and/or List container Section
 //================================================================================================================== 
-char vectorAndOrListContainer()
+void vectorAndOrListContainer()
 {
+	Application list_Apply;
 	do
 	{
 		system("cls");
@@ -175,16 +172,36 @@ char vectorAndOrListContainer()
 
 		switch (inputChar("\n\t\tOption: ", static_cast<string>("0ABCD")))
 		{
-		case '0': return 0;
-		case 'A': system("cls"); break;
-		case 'B': system("cls"); break;
-		case 'C': system("cls"); break;
-		case 'D': system("cls"); break;
+		case '0': return;
+		case 'A': list_Apply.set_List(inputInteger("\n\tAdd an integer: ")); break;
+		case 'B': {
+			int user_Value = inputInteger("\n\t Delete an integer: ");
+			try{
+				list_Apply.delete_List(user_Value);
+			}
+			catch (const invalid_argument& error){
+				cout << "\n\t" << error.what() << to_string(user_Value) << ".";
+			}
+		}break;
+		case 'C': { 
+			if (list_Apply.get_Empty()) {
+				cout << "\n\tERROR: Empty List. Please input integer (Option A)";
+				break;
+			}
+			
+			cout << list_Apply;
+		}; break;
+		case 'D': {
+			if (list_Apply.get_Empty()) {
+				cout << "\n\tERROR: Empty List. Please input integer (Option A)";
+				break;
+			}
+
+			cout << list_Apply.get_Freq();
+			}; break;
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
 		}
 		cout << "\n";
 		system("pause");
 	} while (true);
-
-	return 0;
 }
