@@ -1,15 +1,19 @@
+//Names: Neidy Malaga, & Vivian Huynh
+//Date: 9/25/2023
+//Description: Derived header file for class StudentInfo
+
 #pragma once
 #include "ListContainer.h"
 #include <string>
+#include <iostream>
 using namespace std;
 
 class StudentInfo : public ListContainer
 {
-
 private:
-	string name;
-	int gradeLevel;
-	double gpa;
+	string name;    //To contain the student name
+	int gradeLevel; //To contain the grade level 0...4
+	double gpa;     //To contain the student's gpa
 
 public:
 	//CONSTRUCTOR
@@ -24,4 +28,7 @@ public:
 	void setName(string);
 	void setGradeLevel(int);
 	void setGpa(double);
+
+	//FRIEND
+	friend ostream& operator<<(ostream&, const StudentInfo&);
 };
