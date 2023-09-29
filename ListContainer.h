@@ -17,8 +17,19 @@ public:
 	ListContainer();
 
 	//ACCESSORS
-
+	//back(); //Maybe?
+	//begin();
+	//end();
+	//rbegin();
+	//rend();
 
 	//MUTATORS
-
+	void clear();
+	void resize(int);
+	void pop_front();
+	void erase(int);
+	void erase(int, int);
+	void insert(int, int);
+	void swap();
+	void sort();
 };
