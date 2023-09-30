@@ -3,12 +3,11 @@
 //Description: Derived header file for class StudentInfo
 
 #pragma once
-#include "ListContainer.h"
 #include <string>
 #include <iostream>
 using namespace std;
 
-class StudentInfo : public ListContainer
+class StudentInfo
 {
 private:
 	string name;    //To contain the student name
@@ -18,6 +17,7 @@ private:
 public:
 	//CONSTRUCTOR
 	StudentInfo();
+	StudentInfo(const string&, const int&, const double&);
 
 	//ACCESSORS
 	string getName() const;
