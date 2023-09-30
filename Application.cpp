@@ -39,11 +39,11 @@ string Application::get_Freq() const {
 	map<value_type, int> Sorted_Map;
 	ostream << "\n\tcontainer:";
 
-	for (auto begin = user_val_list.begin(); begin != user_val_list.end(); begin++) {
+	for (auto begin = user_val_list.begin(); begin != user_val_list.end(); ++begin) {
 		++Sorted_Map[(*begin)];
 	}
 
-	for (auto begin = Sorted_Map.begin(); begin != Sorted_Map.end(); begin++) {
+	for (auto begin = Sorted_Map.begin(); begin != Sorted_Map.end(); ++begin) {
 		ostream <<"\n\t" << begin->first << ": " << begin->second;
 	}
 
@@ -55,7 +55,7 @@ string Application::get_Freq() const {
 ostream& operator <<(ostream& out, const Application& obj) {
 	out << "\n\tcontainer: ";
 
-	for (auto begin = obj.user_val_list.begin(); begin != obj.user_val_list.end(); begin++){
+	for (auto begin = obj.user_val_list.begin(); begin != obj.user_val_list.end(); ++begin){
 		out << (*begin) << " ";
 	}
 
