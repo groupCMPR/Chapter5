@@ -11,6 +11,9 @@ const string classLevel[] = { "Unknown", "Freshman", "Sophmore", "Junior", "Seni
 StudentInfo::StudentInfo() : name("Unknown"), gradeLevel(0), gpa(0.0)
 {}
 
+StudentInfo::StudentInfo(const string& new_Name, const int& level, const double& new_Gpa) : name(new_Name), gradeLevel(level), gpa(new_Gpa)
+{}
+
 //============================================================
 // Accessors Section
 //============================================================
@@ -62,6 +65,6 @@ void StudentInfo::setGpa(double newGpa)
 //Postcondition: Outputting the display of student info (Name, Grade Level, GPA)
 ostream& operator<<(ostream& out, const StudentInfo& obj)
 {
-	out << "\n\t" << obj.getName() << ", " << obj.getGradeLevel() << ", " << obj.getGpa() << '\n';
+	out << obj.getName() << ", " << obj.getGradeLevel() << ", " << obj.getGpa();
 	return out;
 }
