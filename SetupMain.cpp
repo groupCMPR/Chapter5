@@ -2,14 +2,17 @@
 // Group 1 Vectors: Alexis and Angie
 // Group 2 List: Vivian and Neidy
 // Group 3: Neidy
+// Vivian organized the main.cpp. Each group did their section of the main.cpp as well as their header and cpp file.
 //Date: 9/25/2023
 //Description: Chapter 5 Assignments: Vector and List Container
 
 #include <iostream> //For cout
+#include <vector> //vector
 #include <fstream> //files
 #include <sstream> //tokenizing 
 //HEADER FILES
 #include "input.h"  //For input validation
+#include "Student.h"
 #include "ListContainer.h"
 #include "Application.h"
 using namespace std;
@@ -17,20 +20,26 @@ using namespace std;
 
 
 //==================================================================================================================
-//					PROTOTYPES
+//				     PROTOTYPES
 //==================================================================================================================
 int mainMenu();
 
 //Option 1 - Vector Container
 void vectorContainer();
+void displayVector(vector<student>&);
+char caseOneMenu();
 
 //Option 2 - List Container
 void listContainer();
 void fill_list(ListContainer&, const bool&);
+char caseTwoMenu();
 
 //Option 3 - Application using Vector and/or List container
 void vectorAndOrListContainer();
+char caseThreeMenu();
 
+//Precondition: None
+//Posctondition: calls vectorContainer, listContainer, or vectorandorlistcontainer
 int main()
 {
 	do
@@ -51,6 +60,8 @@ int main()
 	return 0;
 }
 
+//Precondition: calls from main
+//Posctondition: returns integer choice
 int mainMenu()
 {
 	cout << "\n\t CMPR131 Chapter 5: Vector and List Container by Group 5 (Vivian Huynh) 9/25/2023";
@@ -68,49 +79,189 @@ int mainMenu()
 //==================================================================================================================
 // Option 1 - Vector container Section
 //================================================================================================================== 
+//Precondition: call from main
+//Postcondition:  clears, reserves, resizes, pushes back, pops back, shows front, shows back, returns iterator at specififed position
+//returns begin iterator, returns end iterator, returns all elements, returns rbegin iterator, returns rend iterator,
+//returns all elements in reverse order, removes one element, removes element from one iterator to other iterator,
+//inserts new entry, swaps with another vector, sorts the list
 void vectorContainer()
 {
-	do
-	{
+	vector<student> studentVector;
+
+	do {
 		system("cls");
-		cout << "\n\tVectors are sequence containers representing arrays that can change in size.\n";
-
-		cout << "\n\t1> Vector's member functions";
-		cout << "\n\t" << string(100, char(205));
-		cout << "\n\t\tA> clear() - Removes all elements from the vector (which are destroyed)";
-		cout << "\n\t\tB> reserve(n) - Requests that the vector capacity be at least enough to contain n elements";
-		cout << "\n\t\tC> resize(n) - Resizes the container so that it contains n elements";
-		cout << "\n\t\tD> Read input.dat and push_back(e) - Adds a new element at the end of the vector";
-		cout << "\n\t\tE> pop_back() - Removes the last element in the vector";
-		cout << "\n\t\tF> front() - Returns a reference to the first element in the vector";
-		cout << "\n\t\tG> back() - Returns a reference to the last element in the vector";
-		cout << "\n\t\tH> index using at() or []) - Returns a reference to the element at position n in the vector";
-		cout << "\n\t\tI> begin() - Returns an iterator pointing to the first element in the vector";
-		cout << "\n\t\tJ> end() Returns an iterator referring to the past - the - end element in the vector";
-		cout << "\n\t\tK> Using iterator begin() and end() returns all elements in the vector";
-		cout << "\n\t\tL> rbegin() - Returns a reverse iterator pointing to the last element in the vector";
-		cout << "\n\t\tM> rend() - Returns a reverse iterator pointing to the theoretical element preceding the first";
-		cout << "\n\t\t             element in the vector";
-		cout << "\n\t\tN> Using iterator rbegin() and rend() returns all elements in the vector";
-		cout << "\n\t\tO> erase(it) - Removes from the vector a single element(using an iterator)";
-		cout << "\n\t\tP> erase(start_it, end_it) - Removes from the vector a range of elements(using iterators)";
-		cout << "\n\t\tQ> insert(it, entry) - Insert a new entry at the iterator.";
-		cout << "\n\t\tR> swap() - Exchanges the content of the container by another vector's content of the same type";
-		cout << "\n\t\tS> Sort - Sorts the vector.";
-		cout << "\n\t" << string(100, char(196));
-		cout << "\n\t\t0> return";
-		cout << "\n\t" << string(100, char(205));
-
-		switch (inputChar("\n\t\tOption: ", static_cast<string>("0ABCDEFGHIJKLMNOPQRS")))
-		{
+		switch (caseOneMenu()) {
 		case '0': return;
-		case 'A': system("cls"); break;
-		case 'B': system("cls"); break;
+		case 'A':
+			studentVector.clear();
+			cout << "\n\tThe vector has been cleared.";
+			break;
+		case 'B': {
+			int reserveSpace = inputInteger("\n\tEnter the capacity(1..100): ", 1, 100);
+			studentVector.reserve(reserveSpace);
+			cout << "\n\tThe vector has been reserved " << reserveSpace << " elements.";
+			break;
+		}
+		case 'C': {
+			int newSize = inputInteger("\n\tEnter the new size(1..100): ", 1, 100);
+			studentVector.resize(newSize);
+			cout << "\n\tThe vector has been resized to " << newSize << " elements.";
+			break;
+		}
+
+		case 'D': {
+			ifstream file;
+			file.open("input.dat");
+
+			if (!file.is_open()) {
+				cout << "\n\tError opening file 'input.dat'." << endl;
+				break;
+			}
+
+			while (!file.eof()) {
+				string line;
+				getline(file, line);
+
+				stringstream fileContent(line); //string stream b/c its easier to tokenize
+
+				string name;
+				string gradeLevel;
+				double GPA;
+
+				if (getline(fileContent, name, ',') && getline(fileContent, gradeLevel, ',') && (fileContent >> GPA)) {
+					student newStudent;
+					newStudent.setName(name);
+					newStudent.setGradeLevel(gradeLevel);
+					newStudent.setGPA(GPA);
+					studentVector.push_back(newStudent);
+				}
+			}
+			file.close();
+			displayVector(studentVector);
+			break;
+		}
+		case 'E':
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			cout << "\n\tElement, [" << studentVector.size() - 1 << "]: " << studentVector.back() << ", has been removed from the vector.";
+			studentVector.pop_back();
+			cout << endl;
+
+			displayVector(studentVector);
+
+			break;
+
+		case 'F':
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+
+			cout << "\n\tThe element from the front of the vector: [0] " << studentVector.front();
+			break;
+
+		case 'G':
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+
+			cout << "\n\tThe element from the back of the vector: [" << studentVector.size() - 1 << "] " << studentVector.back();
+			break;
+
+		case 'H': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+
+			int limit = studentVector.size() - 1;
+
+			int number = inputInteger("\n\tEnter the index(0.." + to_string(limit) + "): ", 0, limit);
+
+			cout << "\n\tvector.at(" << number << "): " << studentVector.at(number);
+			cout << "\n\tvector[" << number << "]: " << studentVector[number];
+
+			break;
+		}
+
+		case 'I': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			auto it = studentVector.begin();
+
+			cout << "\n\tThe iterator referring the first element: ";
+			cout << &it;
+			cout << "(" << *it << ")";
+
+			break;
+		}
+
+		case 'J': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			auto it = studentVector.end();
+
+			cout << "\n\tThe iterator referring to the past-the-end element: ";
+			cout << &it;
+
+			break;
+		}
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
 		}
-		cout << "\n";
+		cout << "\n\n\t";
 		system("pause");
 	} while (true);
+}
+
+//Precondition: vector 
+//Postcondtion: displays size and contents of vectors
+void displayVector(vector<student>& studentVector) {
+	cout << "\n\tThe vector now has " << studentVector.size() << " elements.";
+	cout << endl;
+	for (int i = 0; i < studentVector.size(); i++) {
+		cout << "\n\t[" << i << "]: " << studentVector[i];
+	}
+}
+
+//Precondition: called from vectorContainer
+//Postcondition: returns choice character
+char caseOneMenu() {
+	cout << "\n\tVectors are sequence containers representing arrays that can change in size.";
+	cout << endl;
+	cout << "\n\t1> Vector's member functions";
+	cout << "\n\t" << string(100, char(205));
+	cout << "\n\t\tA> clear() - Removes all elements from the vector (which are destroyed)";
+	cout << "\n\t\tB> reserve(n) - Requests that the vector capacity be at least enough to contain n elements";
+	cout << "\n\t\tC> resize(n) - Resizes the container so that it contains n elements";
+	cout << "\n\t\tD> Read input.dat and push_back(e) - Adds a new element at the end of the vector";
+	cout << "\n\t\tE> pop_back() - Removes the last element in the vector";
+	cout << "\n\t\tF> front() - Returns a reference to the first element in the vector";
+	cout << "\n\t\tG> back() - Returns a reference to the last element in the vector";
+	cout << "\n\t\tH> index using at() or []) - Returns a reference to the element at position n in the vector";
+	cout << "\n\t\tI> begin() - Returns an iterator pointing to the first element in the vector";
+	cout << "\n\t\tJ> end() Returns an iterator referring to the past-the-end element in the vector";
+	cout << "\n\t\tK> Using iterator begin() and end() returns all elements in the vector";
+	cout << "\n\t\tL> rbegin() - Returns a reverse iterator pointing to the last element in the vector";
+	cout << "\n\t\tM> rend() - Returns a reverse iterator pointing to the theoretical element preceding the first";
+	cout << "\n\t\t\t    element in the vector";
+	cout << "\n\t\tN> Using iterator rbegin() and rend() returns all elements in the vector";
+	cout << "\n\t\tO> erase(it) - Removes from the vector a single element(using an iterator)";
+	cout << "\n\t\tP> erase(start_it,end_it) - Removes from the vector a range of elements( using iterators)";
+	cout << "\n\t\tQ> insert(it, entry) - Insert a new entry at the iterator.";
+	cout << "\n\t\tR> swap() - Exchanges the content of the container by another vector's content of the same type";
+	cout << "\n\t\tS> Sort - Sorts the vector.";
+	cout << "\n\t" << string(100, char(196));
+	cout << "\n\t\t0> return";
+	cout << "\n\t" << string(100, char(205));
+
+	return inputChar("\n\t\tOption: ", static_cast<string>("ABCDEFGHIJKLMNOPQRS0"));
 }
 
 //==================================================================================================================
@@ -127,36 +278,7 @@ void listContainer()
 	do
 	{
 		system("cls");
-		cout << "\n\tLists are sequence containers that allow constant time insert and erase operations anywhere within the";
-		cout << "\n\tsequence, and iteration in both directions.\n";
-
-		cout << "\n\t2> List container";
-		cout << "\n\t" << string(100, char(205));
-		cout << "\n\t\tA> clear() - Destroys all elements from the list";
-		cout << "\n\t\tB> resize(n) - Changes the list so that it contains n elements";
-		cout << "\n\t\tC> Read input.dat and push_front(e) - Adds a new element at the front of the list";
-		cout << "\n\t\tD> pop_front() - Deletes the first element";
-		cout << "\n\t\tE> front() - Accesses the first element";
-		cout << "\n\t\tF> Read input.dat and push_back(e) - Adds a new element at the end of the list";
-		cout << "\n\t\tG> pop_back() - Delete the last element";
-		cout << "\n\t\tH> back() Accesses the last element";
-		cout << "\n\t\tI> begin() - Returns an iterator refereing to the first element in the list";
-		cout << "\n\t\tJ> end() Returns an iterator referring to the past-the-end element in the list";
-		cout << "\n\t\tK> Using iterator begin() and end() returns all elements in the list";
-		cout << "\n\t\tL> rbegin() - Returns a reverse iterator pointing to the last element in the list";
-		cout << "\n\t\tM> rend() - Returns a reverse iterator pointing to the element preceding the first element";
-		cout << "\n\t\t            in the list";
-		cout << "\n\t\tN> Using iterator rbegin() and rend() returns all elements in the list";
-		cout << "\n\t\tO> erase(it) - Removes from the list a single element(using an iterator)";
-		cout << "\n\t\tP> erase(start_it,end_it) - Removes from the list a range of elements( using iterators)";
-		cout << "\n\t\tQ> insert(it, entry) - Insert a new entry at the iterator.";
-		cout << "\n\t\tR> swap() - Exchanges the content of the container by another list's content of the same type";
-		cout << "\n\t\tS> Sort - Sorts the list.";
-		cout << "\n\t" << string(100, char(196));
-		cout << "\n\t\t0> return";
-		cout << "\n\t" << string(100, char(205));
-
-		switch (inputChar("\n\t\tOption: ", static_cast<string>("0ABCDEFGHIJKLMNOPQRS")))
+		switch (caseTwoMenu())
 		{
 		case '0': return;
 		case 'A': {
@@ -218,7 +340,7 @@ void listContainer()
 				break;
 			}
 
-			cout << "\n\tThe iterator referring the first element:" << &(*link_list.get_First_Iter()) << " " << (*link_list.get_First_Iter()) << ").";
+			cout << "\n\tThe iterator referring the first element: " << &(*link_list.get_First_Iter()) << " (" << (*link_list.get_First_Iter()) << ").";
 
 		} break;
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
@@ -264,18 +386,7 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 			getline(stream, tokenize[i], ',');
 		}
 
-
-		if (tokenize[1] == "Freshman")
-			level = 1;
-		else if (tokenize[1] == "Sophmore")
-			level = 2;
-		else if (tokenize[1] == "Junior")
-			level = 3;
-		else if (tokenize[1] == "Senior")
-			level = 4;
-		else
-			level = 0;
-		link_list.set_List(StudentInfo(tokenize[0], level, stod(tokenize[2])), front_or_back);
+		link_list.set_List(student(tokenize[0], tokenize[1], stod(tokenize[2])), front_or_back);
 	}
 
 	input_File.close();
@@ -283,6 +394,40 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 	cout << "\n\tThe list now has " << link_list.get_Size() << " elements.";
 }
 
+//Precondition: called from listContainer
+//Postcondition: returns choice character
+char caseTwoMenu() {
+	cout << "\n\tLists are sequence containers that allow constant time insert and erase operations anywhere within the";
+	cout << "\n\tsequence, and iteration in both directions.\n";
+
+	cout << "\n\t2> List container";
+	cout << "\n\t" << string(100, char(205));
+	cout << "\n\t\tA> clear() - Destroys all elements from the list";
+	cout << "\n\t\tB> resize(n) - Changes the list so that it contains n elements";
+	cout << "\n\t\tC> Read input.dat and push_front(e) - Adds a new element at the front of the list";
+	cout << "\n\t\tD> pop_front() - Deletes the first element";
+	cout << "\n\t\tE> front() - Accesses the first element";
+	cout << "\n\t\tF> Read input.dat and push_back(e) - Adds a new element at the end of the list";
+	cout << "\n\t\tG> pop_back() - Delete the last element";
+	cout << "\n\t\tH> back() Accesses the last element";
+	cout << "\n\t\tI> begin() - Returns an iterator refereing to the first element in the list";
+	cout << "\n\t\tJ> end() Returns an iterator referring to the past-the-end element in the list";
+	cout << "\n\t\tK> Using iterator begin() and end() returns all elements in the list";
+	cout << "\n\t\tL> rbegin() - Returns a reverse iterator pointing to the last element in the list";
+	cout << "\n\t\tM> rend() - Returns a reverse iterator pointing to the element preceding the first element";
+	cout << "\n\t\t            in the list";
+	cout << "\n\t\tN> Using iterator rbegin() and rend() returns all elements in the list";
+	cout << "\n\t\tO> erase(it) - Removes from the list a single element(using an iterator)";
+	cout << "\n\t\tP> erase(start_it,end_it) - Removes from the list a range of elements( using iterators)";
+	cout << "\n\t\tQ> insert(it, entry) - Insert a new entry at the iterator.";
+	cout << "\n\t\tR> swap() - Exchanges the content of the container by another list's content of the same type";
+	cout << "\n\t\tS> Sort - Sorts the list.";
+	cout << "\n\t" << string(100, char(196));
+	cout << "\n\t\t0> return";
+	cout << "\n\t" << string(100, char(205));
+
+	return inputChar("\n\t\tOption: ", static_cast<string>("0ABCDEFGHIJKLMNOPQRS"));
+}
 
 //==================================================================================================================
 // Option 3 - Application using Vector and/or List container Section
@@ -295,17 +440,8 @@ void vectorAndOrListContainer()
 	do
 	{
 		system("cls");
-		cout << "\n\t3> Application using Vector and/or List container";
-		cout << "\n\t" << string(100, char(205));
-		cout << "\n\t\tA> Add an integer";
-		cout << "\n\t\tB> Delete an integer";
-		cout << "\n\t\tC> Display input integers";
-		cout << "\n\t\tD> Display frequencies of integers";
-		cout << "\n\t" << string(100, char(196));
-		cout << "\n\t\t0> return";
-		cout << "\n\t" << string(100, char(205));
 
-		switch (inputChar("\n\t\tOption: ", static_cast<string>("0ABCD")))
+		switch (caseThreeMenu())
 		{
 		case '0': return;
 		case 'A': list_Apply.set_List(inputInteger("\n\tAdd an integer: ")); break;
@@ -340,4 +476,20 @@ void vectorAndOrListContainer()
 		cout << "\n";
 		system("pause");
 	} while (true);
+}
+
+//Precondition: called from vectorAndOrListContainer
+//Postcondition: returns choice character
+char caseThreeMenu() {
+	cout << "\n\t3> Application using Vector and/or List container";
+	cout << "\n\t" << string(100, char(205));
+	cout << "\n\t\tA> Add an integer";
+	cout << "\n\t\tB> Delete an integer";
+	cout << "\n\t\tC> Display input integers";
+	cout << "\n\t\tD> Display frequencies of integers";
+	cout << "\n\t" << string(100, char(196));
+	cout << "\n\t\t0> return";
+	cout << "\n\t" << string(100, char(205));
+
+	return inputChar("\n\t\tOption: ", static_cast<string>("0ABCD"));
 }
