@@ -1,17 +1,24 @@
 //Names: Alexis Martinez, Angie Campos, Neidy Malaga, & Vivian Huynh
+// Group 1 Vectors: Alexis and Angie
+// Group 2 List: Vivian and Neidy
+// Group 3: Neidy
 //Date: 9/25/2023
 //Description: Chapter 5 Assignments: Vector and List Container
 
 #include <iostream> //For cout
-#include <fstream>
+#include <fstream> //files
+#include <sstream> //tokenizing 
+//HEADER FILES
 #include "input.h"  //For input validation
 #include "ListContainer.h"
 #include "Application.h"
-#include <sstream>
-//HEADER FILES
 using namespace std;
 
-//PROTOTYPES
+
+
+//==================================================================================================================
+//										PROTOTYPES
+//==================================================================================================================
 int mainMenu();
 
 //Option 1 - Vector Container
@@ -109,6 +116,11 @@ void vectorContainer()
 //==================================================================================================================
 // Option 2 - List container Section
 //================================================================================================================== 
+//Precondition: call from main
+//Postcondition:  clears, resizes, pushes front, pops front, shows first element, pushes back, shows last element
+// returns begin iterator, returns end iterator, returns all elements, returns rbegin iterator, returns rend iterator,
+//returns all elements in reverse order, removes one element, removes element from one iterator to other iterator,
+//inserts new entry, swaps with another list, sorts the list
 void listContainer()
 {
 	ListContainer link_list;
@@ -135,8 +147,8 @@ void listContainer()
 		cout << "\n\t\tM> rend() - Returns a reverse iterator pointing to the element preceding the first element";
 		cout << "\n\t\t            in the list";
 		cout << "\n\t\tN> Using iterator rbegin() and rend() returns all elements in the list";
-		cout << "\n\t\tO> erase(it) - Removes from the vector a single element(using an iterator)";
-		cout << "\n\t\tP> erase(start_it,end_it) - Removes from the vector a range of elements( using iterators)";
+		cout << "\n\t\tO> erase(it) - Removes from the list a single element(using an iterator)";
+		cout << "\n\t\tP> erase(start_it,end_it) - Removes from the list a range of elements( using iterators)";
 		cout << "\n\t\tQ> insert(it, entry) - Insert a new entry at the iterator.";
 		cout << "\n\t\tR> swap() - Exchanges the content of the container by another list's content of the same type";
 		cout << "\n\t\tS> Sort - Sorts the list.";
@@ -152,6 +164,7 @@ void listContainer()
 			cout << "\n\tThe list has been cleared.";
 		}; break;
 		case 'B': {
+			//if cannot be resized, error
 			try {
 				link_list.set_Resize(inputInteger("\n\tEnter the new size(1..100):", 1, 100));
 			}
@@ -215,6 +228,8 @@ void listContainer()
 	} while (true);
 }
 
+//Precondition: call from listContainer, needs class and bool
+//Postcondition: pushes elements from file to front or back 
 void fill_list(ListContainer& link_list, const bool& front_or_back) {
 	string file_Name = inputString("\n\tInput name of file (input.dat): ", false);
 	string line;
@@ -225,6 +240,7 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 
 	ifstream input_File(file_Name);
 
+	//error check
 	if (!input_File.is_open()) {
 		cout << "\n\tERROR: " << file_Name << " cannot be opened";
 		return;
@@ -237,6 +253,8 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 		return;
 	}
 
+	//gets one line, tokenizes, find classlevel, sets using constructor
+	//if true will set as push front, false is push back 
 	while (getline(input_File, line)) {
 		istringstream stream(line);
 		int level = 0;
@@ -269,6 +287,8 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 //==================================================================================================================
 // Option 3 - Application using Vector and/or List container Section
 //================================================================================================================== 
+//Precondition: call from main
+//Postcondition:  will add an integer, delete an integer, display all integers, and display all frequencies of integers
 void vectorAndOrListContainer()
 {
 	Application list_Apply;
@@ -290,6 +310,7 @@ void vectorAndOrListContainer()
 		case '0': return;
 		case 'A': list_Apply.set_List(inputInteger("\n\tAdd an integer: ")); break;
 		case 'B': {
+			//if value is not in list, error
 			int user_Value = inputInteger("\n\t Delete an integer: ");
 			try{
 				list_Apply.delete_List(user_Value);
