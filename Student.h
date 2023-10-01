@@ -1,61 +1,33 @@
 #pragma once
-
+#include <string>
 #include <iostream>
 using namespace std;
 
 class student
 {
 private:
-	string name;
-	string gradeLevel;
-	double GPA;
+	string name;    //To contain the student name
+	string gradeLevel; //To contain the grade level
+	double GPA;     //To contain the student's gpa
 
 public:
-	//default constructor
-	student() : name("unknown"), gradeLevel("unknown"), GPA(0.0)
-	{}
+	//CONSTRUCTOR
+	student();
+	student(const string&, const string&, const double&);
 
-	//mutator 
-	void setName(string newName)
-	{
-		name = newName;
-	}
+	//ACCESSORS
+	string getName() const;
+	string getGradeLevel() const;
+	double getGPA() const;
 
-	//mutator 
-	void setGradeLevel(string newGradeLevel)
-	{
-		gradeLevel = newGradeLevel;
-	}
+	//MUTATORS
+	void setName(const string&);
+	void setGradeLevel(const string&);
+	void setGPA(const double&);
 
-	//mutator 
-	void setGPA(double newGPA)
-	{
-		GPA = newGPA;
-	}
-
-	//overloading operator <<
-	friend ostream& operator <<(ostream& outs, const student& obj)
-	{
-		outs << obj.name << ", " << obj.gradeLevel << ", " << obj.GPA;
-		return outs;
-	}
-
-	//overloading operator == 
-	friend bool operator ==(const student& obj1, const student& obj2)
-	{
-		if ((obj1.GPA == obj2.GPA) && (obj1.gradeLevel == obj2.gradeLevel) && (obj1.name == obj2.name))
-			return true;
-		else
-			return false;
-	}
-
-	//overloading operator <
-	friend bool operator <(const student& obj1, const student& obj2)
-	{
-		if (obj1.name < obj2.name)
-			return true;
-		else
-			return false;
-	}
+	//FRIEND
+	friend ostream& operator<<(ostream&, const student&);
+	friend bool operator ==(const student&, const student&);
+	friend bool operator <(const student&, const student&);
 
 };
