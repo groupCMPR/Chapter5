@@ -68,3 +68,25 @@ ostream& operator<<(ostream& out, const StudentInfo& obj)
 	out << obj.getName() << ", " << obj.getGradeLevel() << ", " << obj.getGpa();
 	return out;
 }
+
+//overloading operator == 
+//Precondition : two StudentInfo classes 
+//Postcondition: returns true if all private members are same, else false
+friend bool operator ==(const StudentInfo& obj1, const StudentInfo& obj2)
+{
+	if ((obj1.GPA == obj2.GPA) && (obj1.gradeLevel == obj2.gradeLevel) && (obj1.name == obj2.name))
+		return true;
+	else
+		return false;
+}
+
+//overloading operator <
+//Precondition : two StudentInfo classes 
+
+friend bool operator <(const  StudentInfo& obj1, const  StudentInfo& obj2)
+{
+	if (obj1.name < obj2.name)
+		return true;
+	else
+		return false;
+}
