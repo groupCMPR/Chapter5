@@ -24,16 +24,16 @@ void ListContainer::set_Resize(const int& size) {
 	}
 	else if (size > Student_List.size()) {
 		for (size_t i = Student_List.size(); i < size; ++i)
-			Student_List.push_back(StudentInfo());
+			Student_List.push_back(student());
 	}
 	else
 		throw invalid_argument("ERROR: could not be resized");
 
 }
 
-//Precondition: class Studentinfo, bool choice 
+//Precondition: class student, bool choice 
 //Postcondition: pushes class into list, if true pushes it to front, false pushes it back
-void ListContainer::set_List(const StudentInfo& info, const bool& choice) {
+void ListContainer::set_List(const student& info, const bool& choice) {
 	switch (choice) {
 	case true: Student_List.push_front(info); break;
 	case false: Student_List.push_back(info); break;
@@ -41,13 +41,13 @@ void ListContainer::set_List(const StudentInfo& info, const bool& choice) {
 }
 
 //Precondition: List must not be empty
-//Postcondition: deletes first Studentinfo class from list
+//Postcondition: deletes first student class from list
 void ListContainer::set_Pop_Front() {
 	Student_List.pop_front();
 }
 
 //Precondition: List must not be empty
-//Postcondition: deletes last Studentinfo class from list
+//Postcondition: deletes last student class from list
 void ListContainer::set_Pop_Back() {
 	Student_List.pop_back();
 }
@@ -87,14 +87,14 @@ string ListContainer::get_Back() const {
 
 //Precondition: list must not be empty
 //Postcondtion: returns a const iterator that cannot be changed in main.cpp
-list<StudentInfo>::const_iterator ListContainer::get_First_Iter() const {
+list<student>::const_iterator ListContainer::get_First_Iter() const {
 	return Student_List.begin();
 }
 
 //Precondition: class object ListContainer
 //Postcondtion: returns ostream (will contain overloaded << StudentInfo)
 ostream& operator<<(ostream& out, const ListContainer& obj) {
-	for (list<StudentInfo>::const_iterator iter = obj.Student_List.begin(); iter != obj.Student_List.end(); ++iter)
+	for (list<student>::const_iterator iter = obj.Student_List.begin(); iter != obj.Student_List.end(); ++iter)
 		out << "\n\t" << *iter;
 
 	return out;
