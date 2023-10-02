@@ -29,7 +29,7 @@ public:
 	void setGradeLevel(const string&);
 	void setGPA(const double&);
 
-	//FRIEND
+	//FRIENDS
 	friend ostream& operator<<(ostream&, const Student&);
 	friend bool operator ==(const Student&, const Student&);
 	friend bool operator <(const Student&, const Student&);
