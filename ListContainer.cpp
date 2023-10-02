@@ -28,14 +28,14 @@ void ListContainer::set_Resize(const int& size) {
 	}
 	else if (size > Student_List.size()) {
 		for (size_t i = Student_List.size(); i < size; ++i)
-			Student_List.push_back(StudentInfo());
+			Student_List.push_back(Student());
 	}
 	else
 		throw invalid_argument("ERROR: could not be resized");
 }
 //Precondition : Class student, bool choice 
 //Postcondition: Pushes class into list, if true pushes it to front, false pushes it back
-void ListContainer::set_List(const StudentInfo& info, const bool& choice) {
+void ListContainer::set_List(const Student& info, const bool& choice) {
 	switch (choice) {
 	case true: Student_List.push_front(info); break;
 	case false: Student_List.push_back(info); break;
@@ -83,9 +83,20 @@ string ListContainer::get_Back() const {
 }
 //Precondition : List must not be empty
 //Postcondition: Returns a const iterator that cannot be changed in main.cpp
-list<StudentInfo>::const_iterator ListContainer::get_First_Iter() const {
+list<Student>::const_iterator ListContainer::get_First_Iter() const {
 	return Student_List.begin();
 }
+//Precondition : List must not be empty
+//Postcondition: Returns a const iterator that cannot be changed in main.cpp
+list<Student>::const_iterator ListContainer::get_Past_End_Iter() const {
+	return Student_List.end();
+}
+//string ListContainer::get_RBegin() const {
+//
+//}
+//string ListContainer::get_REnd() const {
+//
+//}
 
 //---------------------------------------------------------------------------
 //                                FRIEND
@@ -93,7 +104,7 @@ list<StudentInfo>::const_iterator ListContainer::get_First_Iter() const {
 //Precondition : Class object ListContainer
 //Postcondition: Returns ostream (will contain overloaded << StudentInfo)
 ostream& operator<<(ostream& out, const ListContainer& obj) {
-	for (list<StudentInfo>::const_iterator iter = obj.Student_List.begin(); iter != obj.Student_List.end(); ++iter)
+	for (list<Student>::const_iterator iter = obj.Student_List.begin(); iter != obj.Student_List.end(); ++iter)
 		out << "\n\t" << *iter;
 
 	return out;
