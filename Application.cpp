@@ -1,18 +1,23 @@
+//Names: Alexis Martinez & Angie Campos
+//Date: 9/28/2023
+//Description: cpp file for class Application
+
 #include "Application.h"
-//Default constructor
+
+//Precondition : N/A
+//Postcondition: N/A
 Application::Application() {}
 
 //---------------------------------------------------------------------------
 //                                MUTATORS
 //---------------------------------------------------------------------------
-//Precondition: integer new_Value
-//PostconditionL pushes in typedef value into back of list
+//Precondition : Integer new_Value
+//Postcondition: Pushes in typedef value into back of list
 void Application::set_List(const value_type& new_Val) {
 	user_val_list.push_back(new_Val);
 }
-
-//Precondition: integer user_Val
-//Postcondition: either returns if element is not in list, or erases it
+//Precondition : Integer user_Val
+//Postcondition: Either returns if element is not in list, or erases it
 void Application::delete_List(const value_type& user_Val) {
 	list<value_type>::iterator find_element = find(user_val_list.begin(), user_val_list.end(), user_Val);
 
@@ -24,16 +29,15 @@ void Application::delete_List(const value_type& user_Val) {
 }
 
 //---------------------------------------------------------------------------
-//                                ACCESOR
+//                                ACCESSORS
 //---------------------------------------------------------------------------
-//Precondition: None
-//Postcondtion: returns true if list is empty, else false
+//Precondition : N/A
+//Postcondition: Returns true if list is empty, else false
 bool Application::get_Empty() const {
 	return (user_val_list.empty());
 }
-
-//Precondition: class must be filled in
-//Postcondition: returns string showing frequencies of each number
+//Precondition : Class must be filled in
+//Postcondition: Returns string showing frequencies of each number
 string Application::get_Freq() const {
 	ostringstream ostream;
 	map<value_type, int> Sorted_Map;
@@ -44,18 +48,17 @@ string Application::get_Freq() const {
 	}
 
 	for (auto begin = Sorted_Map.begin(); begin != Sorted_Map.end(); ++begin) {
-		ostream <<"\n\t" << begin->first << ": " << begin->second;
+		ostream << "\n\t" << begin->first << ": " << begin->second;
 	}
 
 	return ostream.str();
 }
-
-//Precondition: ostream, and class object, list must not be empty
-//Postcondtion: returns an ostream for display
+//Precondition : ostream, and class object, list must not be empty
+//Postcondition: Returns an ostream for display
 ostream& operator <<(ostream& out, const Application& obj) {
 	out << "\n\tcontainer: ";
 
-	for (auto begin = obj.user_val_list.begin(); begin != obj.user_val_list.end(); ++begin){
+	for (auto begin = obj.user_val_list.begin(); begin != obj.user_val_list.end(); ++begin) {
 		out << (*begin) << " ";
 	}
 
