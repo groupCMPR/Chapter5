@@ -14,7 +14,7 @@
 //HEADER FILES
 #include "input.h"         //For input validation
 #include "ListContainer.h" //For option 2
-#include "StudentInfo.h"   //Derived class
+#include "Student.h"   //Derived class
 #include "Application.h"   //For option 3
 using namespace std;
 
@@ -25,7 +25,7 @@ int mainMenu();
 
 //Option 1 - Vector Container
 void vectorContainer();
-void displayVector(vector<StudentInfo>&);
+void displayVector(vector<Student>&);
 char caseOneMenu();
 
 //Option 2 - List Container
@@ -85,7 +85,7 @@ int mainMenu()
 //inserts new entry, swaps with another vector, sorts the list
 void vectorContainer()
 {
-	vector<StudentInfo> studentVector;
+	vector<Student> studentVector;
 
 	do {
 		system("cls");
@@ -128,7 +128,7 @@ void vectorContainer()
 				double GPA;
 
 				if (getline(fileContent, name, ',') && getline(fileContent, gradeLevel, ',') && (fileContent >> GPA)) {
-					StudentInfo newStudent;
+					Student newStudent;
 					newStudent.setName(name);
 					newStudent.setGradeLevel(gradeLevel);
 					newStudent.setGPA(GPA);
@@ -221,7 +221,7 @@ void vectorContainer()
 
 //Precondition : Passing vector 
 //Postcondition: Displays size and contents of vectors
-void displayVector(vector<StudentInfo>& studentVector) {
+void displayVector(vector<Student>& studentVector) {
 	cout << "\n\tThe vector now has " << studentVector.size() << " elements.";
 	cout << endl;
 	for (int i = 0; i < studentVector.size(); i++) {
@@ -252,7 +252,7 @@ char caseOneMenu() {
 	cout << "\n\t\t\t    element in the vector";
 	cout << "\n\t\tN> Using iterator rbegin() and rend() returns all elements in the vector";
 	cout << "\n\t\tO> erase(it) - Removes from the vector a single element(using an iterator)";
-	cout << "\n\t\tP> erase(start_it,end_it) - Removes from the vector a range of elements( using iterators)";
+	cout << "\n\t\tP> erase(start_it,end_it) - Removes from the vector a range of elements(using iterators)";
 	cout << "\n\t\tQ> insert(it, entry) - Insert a new entry at the iterator.";
 	cout << "\n\t\tR> swap() - Exchanges the content of the container by another vector's content of the same type";
 	cout << "\n\t\tS> Sort - Sorts the vector.";
@@ -342,6 +342,59 @@ void listContainer()
 			cout << "\n\tThe iterator referring the first element: " << &(*link_list.get_First_Iter()) << " (" << (*link_list.get_First_Iter()) << ").";
 
 		} break;
+		case 'J': {
+			if (link_list.get_Empty()) {
+				cout << "\n\tList is empty.";
+				break;
+			}
+
+			cout << "\n\tThe iterator referring to the past-the-end element: " << &(*link_list.get_Past_End_Iter()) << " (" << (*link_list.get_Past_End_Iter()) << ").";
+
+		}break;
+		case 'K': {
+			if (link_list.get_Empty()) {
+				cout << "\n\tList is empty.";
+				break;
+			}
+
+			auto it = link_list.get_First_Iter();
+			
+			for (it = link_list.get_First_Iter(); it != link_list.get_Past_End_Iter(); it++)
+			{
+				cout << "\n\t" << &it << " (" << *it << ")";
+			}
+		}break;
+		case 'L': {
+
+		}break;
+		case 'M':
+		{
+
+		}break;
+		case 'N':
+		{
+
+		}break;
+		case 'O':
+		{
+
+		}break;
+		case 'P':
+		{
+
+		}break;
+		case 'Q':
+		{
+
+		}break;
+		case 'R':
+		{
+
+		}break;
+		case 'S':
+		{
+
+		}break;
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
 		}
 		cout << "\n";
@@ -385,7 +438,7 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 			getline(stream, tokenize[i], ',');
 		}
 
-		link_list.set_List(StudentInfo(tokenize[0], tokenize[1], stod(tokenize[2])), front_or_back);
+		link_list.set_List(Student(tokenize[0], tokenize[1], stod(tokenize[2])), front_or_back);
 	}
 
 	input_File.close();
@@ -409,7 +462,7 @@ char caseTwoMenu() {
 	cout << "\n\t\tF> Read input.dat and push_back(e) - Adds a new element at the end of the list";
 	cout << "\n\t\tG> pop_back() - Delete the last element";
 	cout << "\n\t\tH> back() Accesses the last element";
-	cout << "\n\t\tI> begin() - Returns an iterator refereing to the first element in the list";
+	cout << "\n\t\tI> begin() - Returns an iterator referring to the first element in the list";
 	cout << "\n\t\tJ> end() Returns an iterator referring to the past-the-end element in the list";
 	cout << "\n\t\tK> Using iterator begin() and end() returns all elements in the list";
 	cout << "\n\t\tL> rbegin() - Returns a reverse iterator pointing to the last element in the list";
@@ -417,7 +470,7 @@ char caseTwoMenu() {
 	cout << "\n\t\t            in the list";
 	cout << "\n\t\tN> Using iterator rbegin() and rend() returns all elements in the list";
 	cout << "\n\t\tO> erase(it) - Removes from the list a single element(using an iterator)";
-	cout << "\n\t\tP> erase(start_it,end_it) - Removes from the list a range of elements( using iterators)";
+	cout << "\n\t\tP> erase(start_it,end_it) - Removes from the list a range of elements(using iterators)";
 	cout << "\n\t\tQ> insert(it, entry) - Insert a new entry at the iterator.";
 	cout << "\n\t\tR> swap() - Exchanges the content of the container by another list's content of the same type";
 	cout << "\n\t\tS> Sort - Sorts the list.";
