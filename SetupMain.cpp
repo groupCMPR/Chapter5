@@ -1,23 +1,22 @@
 //Names: Alexis Martinez, Angie Campos, Neidy Malaga, & Vivian Huynh
-// Group 1 Vectors: Alexis and Angie
-// Group 2 List: Vivian and Neidy
-// Group 3: Neidy
-// Vivian organized the main.cpp. Each group did their section of the main.cpp as well as their header and cpp file.
 //Date: 9/25/2023
 //Description: Chapter 5 Assignments: Vector and List Container
+//Group 1 Vectors: Alexis and Angie
+//Group 2 List: Vivian and Neidy
+//Group 3 Application: Neidy
+//Vivian organized the main.cpp. Each group did their section of the main.cpp as well as their header and cpp file.
 
 #include <iostream> //For cout
-#include <vector> //vector
-#include <fstream> //files
-#include <sstream> //tokenizing 
+#include <vector>   //For vector
+#include <fstream>  //For files
+#include <sstream>  //For tokenizing 
+
 //HEADER FILES
-#include "input.h"  //For input validation
-#include "Student.h"
-#include "ListContainer.h"
-#include "Application.h"
+#include "input.h"         //For input validation
+#include "ListContainer.h" //For option 2
+#include "StudentInfo.h"   //Derived class
+#include "Application.h"   //For option 3
 using namespace std;
-
-
 
 //==================================================================================================================
 //				     PROTOTYPES
@@ -26,7 +25,7 @@ int mainMenu();
 
 //Option 1 - Vector Container
 void vectorContainer();
-void displayVector(vector<student>&);
+void displayVector(vector<StudentInfo>&);
 char caseOneMenu();
 
 //Option 2 - List Container
@@ -38,8 +37,8 @@ char caseTwoMenu();
 void vectorAndOrListContainer();
 char caseThreeMenu();
 
-//Precondition: None
-//Posctondition: calls vectorContainer, listContainer, or vectorandorlistcontainer
+//Precondition : N/A
+//Posctondition: Calls vectorContainer, listContainer, or vectorandorlistcontainer
 int main()
 {
 	do
@@ -60,11 +59,11 @@ int main()
 	return 0;
 }
 
-//Precondition: calls from main
-//Posctondition: returns integer choice
+//Precondition : Calls from main
+//Posctondition: Returns integer choice
 int mainMenu()
 {
-	cout << "\n\t CMPR131 Chapter 5: Vector and List Container by Group 5 (Vivian Huynh) 9/25/2023";
+	cout << "\n\t CMPR131 Chapter 5: Vector and List Container by Group 5 () 9/25/2023";
 	cout << "\n\t" << string(100, char(205));
 	cout << "\n\t\t1> Vector container";
 	cout << "\n\t\t2> List container";
@@ -79,14 +78,14 @@ int mainMenu()
 //==================================================================================================================
 // Option 1 - Vector container Section
 //================================================================================================================== 
-//Precondition: call from main
-//Postcondition:  clears, reserves, resizes, pushes back, pops back, shows front, shows back, returns iterator at specififed position
+//Precondition : Call from main
+//Postcondition: clears, reserves, resizes, pushes back, pops back, shows front, shows back, returns iterator at specififed position
 //returns begin iterator, returns end iterator, returns all elements, returns rbegin iterator, returns rend iterator,
 //returns all elements in reverse order, removes one element, removes element from one iterator to other iterator,
 //inserts new entry, swaps with another vector, sorts the list
 void vectorContainer()
 {
-	vector<student> studentVector;
+	vector<StudentInfo> studentVector;
 
 	do {
 		system("cls");
@@ -129,7 +128,7 @@ void vectorContainer()
 				double GPA;
 
 				if (getline(fileContent, name, ',') && getline(fileContent, gradeLevel, ',') && (fileContent >> GPA)) {
-					student newStudent;
+					StudentInfo newStudent;
 					newStudent.setName(name);
 					newStudent.setGradeLevel(gradeLevel);
 					newStudent.setGPA(GPA);
@@ -220,9 +219,9 @@ void vectorContainer()
 	} while (true);
 }
 
-//Precondition: vector 
-//Postcondtion: displays size and contents of vectors
-void displayVector(vector<student>& studentVector) {
+//Precondition : Passing vector 
+//Postcondition: Displays size and contents of vectors
+void displayVector(vector<StudentInfo>& studentVector) {
 	cout << "\n\tThe vector now has " << studentVector.size() << " elements.";
 	cout << endl;
 	for (int i = 0; i < studentVector.size(); i++) {
@@ -230,8 +229,8 @@ void displayVector(vector<student>& studentVector) {
 	}
 }
 
-//Precondition: called from vectorContainer
-//Postcondition: returns choice character
+//Precondition : Called from vectorContainer
+//Postcondition: Returns choice character
 char caseOneMenu() {
 	cout << "\n\tVectors are sequence containers representing arrays that can change in size.";
 	cout << endl;
@@ -267,8 +266,8 @@ char caseOneMenu() {
 //==================================================================================================================
 // Option 2 - List container Section
 //================================================================================================================== 
-//Precondition: call from main
-//Postcondition:  clears, resizes, pushes front, pops front, shows first element, pushes back, shows last element
+//Precondition : Call from main
+//Postcondition: clears, resizes, pushes front, pops front, shows first element, pushes back, shows last element
 // returns begin iterator, returns end iterator, returns all elements, returns rbegin iterator, returns rend iterator,
 //returns all elements in reverse order, removes one element, removes element from one iterator to other iterator,
 //inserts new entry, swaps with another list, sorts the list
@@ -350,8 +349,8 @@ void listContainer()
 	} while (true);
 }
 
-//Precondition: call from listContainer, needs class and bool
-//Postcondition: pushes elements from file to front or back 
+//Precondition : Call from listContainer, needs class and bool
+//Postcondition: Pushes elements from file to front or back 
 void fill_list(ListContainer& link_list, const bool& front_or_back) {
 	string file_Name = inputString("\n\tInput name of file (input.dat): ", false);
 	string line;
@@ -381,12 +380,12 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 		istringstream stream(line);
 		int level = 0;
 		string tokenize[3];
-		
+
 		for (int i = 0; i < 3; ++i) {
 			getline(stream, tokenize[i], ',');
 		}
 
-		link_list.set_List(student(tokenize[0], tokenize[1], stod(tokenize[2])), front_or_back);
+		link_list.set_List(StudentInfo(tokenize[0], tokenize[1], stod(tokenize[2])), front_or_back);
 	}
 
 	input_File.close();
@@ -394,8 +393,8 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 	cout << "\n\tThe list now has " << link_list.get_Size() << " elements.";
 }
 
-//Precondition: called from listContainer
-//Postcondition: returns choice character
+//Precondition : Called from listContainer
+//Postcondition: Returns choice character
 char caseTwoMenu() {
 	cout << "\n\tLists are sequence containers that allow constant time insert and erase operations anywhere within the";
 	cout << "\n\tsequence, and iteration in both directions.\n";
@@ -432,8 +431,8 @@ char caseTwoMenu() {
 //==================================================================================================================
 // Option 3 - Application using Vector and/or List container Section
 //================================================================================================================== 
-//Precondition: call from main
-//Postcondition:  will add an integer, delete an integer, display all integers, and display all frequencies of integers
+//Precondition : Call from main
+//Postcondition: Will add an integer, delete an integer, display all integers, and display all frequencies of integers
 void vectorAndOrListContainer()
 {
 	Application list_Apply;
@@ -448,19 +447,19 @@ void vectorAndOrListContainer()
 		case 'B': {
 			//if value is not in list, error
 			int user_Value = inputInteger("\n\t Delete an integer: ");
-			try{
+			try {
 				list_Apply.delete_List(user_Value);
 			}
-			catch (const invalid_argument& error){
+			catch (const invalid_argument& error) {
 				cout << "\n\t" << error.what() << to_string(user_Value) << ".";
 			}
 		}break;
-		case 'C': { 
+		case 'C': {
 			if (list_Apply.get_Empty()) {
 				cout << "\n\tERROR: Empty List. Please input integer (Option A)";
 				break;
 			}
-			
+
 			cout << list_Apply;
 		}; break;
 		case 'D': {
@@ -470,7 +469,7 @@ void vectorAndOrListContainer()
 			}
 
 			cout << list_Apply.get_Freq();
-			}; break;
+		}; break;
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
 		}
 		cout << "\n";
@@ -478,8 +477,8 @@ void vectorAndOrListContainer()
 	} while (true);
 }
 
-//Precondition: called from vectorAndOrListContainer
-//Postcondition: returns choice character
+//Precondition : Called from vectorAndOrListContainer
+//Postcondition: Returns choice character
 char caseThreeMenu() {
 	cout << "\n\t3> Application using Vector and/or List container";
 	cout << "\n\t" << string(100, char(205));
