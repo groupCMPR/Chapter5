@@ -12,7 +12,7 @@ class StudentInfo
 private:
 	string name;    //To contain the student name
 	int gradeLevel; //To contain the grade level 0...4
-	double gpa;     //To contain the student's gpa
+	double gpa;     //To contain the student's gpa 0.0...4.0
 
 public:
 	//CONSTRUCTOR
