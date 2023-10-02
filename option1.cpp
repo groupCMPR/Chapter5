@@ -8,7 +8,7 @@
 using namespace std;
 
 int mainMenu();
-void displayVector(vector<student>&);
+void displayVector(vector<Student>&);
 void caseOne();
 char caseOneMenu();
 
@@ -29,9 +29,9 @@ int main() {
 	return EXIT_SUCCESS;
 }
 
-int mainMenu(){
+int mainMenu() {
 	cout << "\n\tCMPR131 Chapter 5: Vector and List Container";
-	cout << "\n\t" << string(100,char(205));
+	cout << "\n\t" << string(100, char(205));
 	cout << "\n\t\t1> Vector container";
 	cout << "\n\t\t2> List container";
 	cout << "\n\t\t3> Application using Vector and/or List container";
@@ -43,7 +43,7 @@ int mainMenu(){
 }
 
 void caseOne() {
-	vector<student> studentVector;
+	vector<Student> studentVector;
 
 	do {
 		system("cls");
@@ -68,9 +68,10 @@ void caseOne() {
 
 		case 'D': {
 			ifstream file;
+
 			file.open("input.dat");
 
-			if (!file.is_open()) {
+			if (!file) {
 				cout << "\n\tError opening file 'input.dat'." << endl;
 				break;
 			}
@@ -86,7 +87,7 @@ void caseOne() {
 				double GPA;
 
 				if (getline(fileContent, name, ',') && getline(fileContent, gradeLevel, ',') && (fileContent >> GPA)) {
-					student newStudent;
+					Student newStudent;
 					newStudent.setName(name);
 					newStudent.setGradeLevel(gradeLevel);
 					newStudent.setGPA(GPA);
@@ -110,7 +111,7 @@ void caseOne() {
 
 			break;
 
-		case 'F': 
+		case 'F':
 			if (studentVector.empty()) {
 				cout << "\n\tThe vector is empty.";
 				break;
@@ -143,7 +144,7 @@ void caseOne() {
 
 			break;
 		}
-			
+
 		case 'I': {
 			if (studentVector.empty()) {
 				cout << "\n\tThe vector is empty.";
@@ -170,39 +171,61 @@ void caseOne() {
 
 			break;
 		}
-		//start new cases here 
-		// 
+				//start new cases here 
+				// 
 		case 'K': {
-			vector <student>::iterator start;
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector <Student>::iterator start;
 			cout << "\n\t\tUsing begin() and end(), the vector contains:\n";
-			for (start = studentVector.begin();start != studentVector.end(); ++start)
+			for (start = studentVector.begin(); start != studentVector.end(); ++start) 
 				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
+			
 			break;
-				  }
+		}
 		case 'L': {
-			vector <student>::iterator start;
-			start = studentVector.begin();
-			cout << *start;
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			auto it = studentVector.rbegin();
+			cout << "\n\t\tThe reverse iterator pointing to the last element:"  << &it << " " << "(" << *it << ")";
 			break;
 		}
 		case 'M': {
-			vector <student>::iterator end;
-			end = studentVector.end();
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector <Student>::reverse_iterator end;
+			end = studentVector.rend();
 
-			cout << *end;
+			cout <<"\n\tThe reverse iterator pointing to the theoretical element preceding the first element in the vector: " << &end;
 
 			break;
 		}
 		case 'N': {
-			vector<student>::iterator start;
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector<Student>::reverse_iterator start;
 
-			for (start = studentVector.begin(); start != studentVector.end();++start)
+			cout << "\n\tUsing rbegin() and rend(), the vector contains reversed elments: " << endl;
+
+			for (start = studentVector.rbegin(); start != studentVector.rend(); ++start)
 				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
 
 			break;
 		}
 		case 'O': {
-			vector<student>::iterator start;
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector<Student>::iterator start;
 			start = studentVector.begin();
 
 			studentVector.erase(start);
@@ -212,8 +235,12 @@ void caseOne() {
 			break;
 		}
 		case 'P': {
-			vector<student>::iterator start; 
-			vector<student>::iterator end;
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector<Student>::iterator start;
+			vector<Student>::iterator end;
 
 			start = studentVector.begin();
 			end = studentVector.end();
@@ -225,35 +252,49 @@ void caseOne() {
 			break;
 		}
 		case 'Q': {
-			student newStudent;
-			string fullName;
 
-			cout << "\n\t\tEnter a new student name: ";
-			cin >> fullName;
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
 
-			newStudent.setName(fullName);
+			Student newStudent;
 
-			int gradeLevel = inputInteger("\n\t\tEnter the his/her level (1-Freshman, 2-Sophmore, 3-Junior, or 4-Senior): ", 1, 4);
-			double gpa = inputDouble("\n\t\tEnter his/her GPA (0.0..4.0): ", 0.0, 4.0);
+			string names[] = { "Freshman", "Sophmore", "Junior", "Senior" };
+		
 
-			cout << "\n\t\tThe new element has been inserted after the begin iterator."; 
+			newStudent.setName(inputString("\n\t\tEnter a new student name: ", true));
+
+			int number = inputInteger("\n\t\tEnter the his/her level (1-Freshman, 2-Sophmore, 3-Junior, or 4-Senior): ", 1, 4);
+
+			newStudent.setGradeLevel(names[number -1]);
+			newStudent.setGPA(inputDouble("\n\t\tEnter his/her GPA (0.0..4.0): ", 0.0, 4.0));
+
+			auto it = studentVector.begin() + 1;
+
+			studentVector.insert(it, newStudent);
+
+			cout << "\n\t\tThe new element has been inserted after the begin iterator.";
 
 			break;
 		}
 		case 'R': {
-			vector<student> studentVector2; 
+			vector<Student> studentVector2;
 			cout << "\n\t\tvector (v2) is initially empty.\n";
-			studentVector2.swap(studentVector); 
+			studentVector2.swap(studentVector);
 
 			cout << "\n\t\tvector (v1) is empty after swapped with vector (v2).\n";
 			cout << "\n\t\tvector (v2) after swapped with vector (v1).\n";
 
-			for (int i = 0; i < studentVector2.size(); i++) 
-				cout << "\t\t[" << i << "]" << studentVector2[i] << "\n"; 
+			for (int i = 0; i < studentVector2.size(); i++)
+				cout << "\t\t[" << i << "]" << studentVector2[i] << "\n";
 
 			break;
 		}
 		case 'S': {
+			cout << "\n\tVector has been sorted";
+
+			cout << endl;
 			sort(studentVector.begin(), studentVector.end());
 
 			for (int i = 0; i < studentVector.size(); i++)
@@ -261,7 +302,7 @@ void caseOne() {
 
 			break;
 		}
-			
+
 
 		}
 		cout << "\n\n\t";
@@ -269,7 +310,7 @@ void caseOne() {
 	} while (true);
 }
 
-void displayVector(vector<student>& studentVector) {
+void displayVector(vector<Student>& studentVector) {
 	cout << "\n\tThe vector now has " << studentVector.size() << " elements.";
 	cout << endl;
 	for (int i = 0; i < studentVector.size(); i++) {
