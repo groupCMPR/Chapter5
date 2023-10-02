@@ -1,19 +1,23 @@
+//Names: Neidy Malaga & Vivian Huynh
+//Date: 9/25/2023
+//Description: Derived header file for class Student
+
 #pragma once
-#include <string>
-#include <iostream>
+#include <string>   //For string
+#include <iostream> //For cout
 using namespace std;
 
-class student
+class Student
 {
 private:
-	string name;    //To contain the student name
+	string name;       //To contain the student name
 	string gradeLevel; //To contain the grade level
-	double GPA;     //To contain the student's gpa
+	double gpa;        //To contain the student's gpa 0.0...4.0 (*Not fully capitalized to confuse with constant.)
 
 public:
 	//CONSTRUCTOR
-	student();
-	student(const string&, const string&, const double&);
+	Student(); //Default
+	Student(const string&, const string&, const double&); //Argument
 
 	//ACCESSORS
 	string getName() const;
@@ -26,8 +30,7 @@ public:
 	void setGPA(const double&);
 
 	//FRIEND
-	friend ostream& operator<<(ostream&, const student&);
-	friend bool operator ==(const student&, const student&);
-	friend bool operator <(const student&, const student&);
-
+	friend ostream& operator<<(ostream&, const Student&);
+	friend bool operator ==(const Student&, const Student&);
+	friend bool operator <(const Student&, const Student&);
 };
