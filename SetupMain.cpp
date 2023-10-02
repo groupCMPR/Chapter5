@@ -212,6 +212,133 @@ void vectorContainer()
 
 			break;
 		}
+		case 'K': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector <Student>::iterator start;
+			cout << "\n\t\tUsing begin() and end(), the vector contains:\n";
+			for (start = studentVector.begin(); start != studentVector.end(); ++start)
+				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
+
+			break;
+		}
+		case 'L': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			auto it = studentVector.rbegin();
+			cout << "\n\t\tThe reverse iterator pointing to the last element:" << &it << " " << "(" << *it << ")";
+			break;
+		}
+		case 'M': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector <Student>::reverse_iterator end = studentVector.rend();
+
+			cout << "\n\tThe reverse iterator pointing to the theoretical element preceding the first element in the vector: " << &end;
+
+			break;
+		}
+		case 'N': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+
+			cout << "\n\tUsing rbegin() and rend(), the vector contains reversed elments: " << endl;
+
+			for (vector<Student>::reverse_iterator start = studentVector.rbegin(); start != studentVector.rend(); ++start)
+				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
+
+			break;
+		}
+		case 'O': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector<Student>::iterator start = studentVector.begin() + 1;
+
+			studentVector.erase(start);
+
+			cout << "\n\tAn element after the begin iterator " << &start << " has been removed.\n";
+
+			break;
+		}
+		case 'P': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			vector<Student>::iterator start = studentVector.begin();
+			vector<Student>::iterator end = studentVector.end();
+
+			studentVector.erase(start, end);
+
+			cout << "\n\t\tAll elements starting at begin iterator " << &start << " and going up to end iterator " << &end << " has been removed.\n";
+
+			break;
+		}
+		case 'Q': {
+
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+
+			Student newStudent;
+
+			string names[] = { "Freshman", "Sophmore", "Junior", "Senior" };
+
+
+			newStudent.setName(inputString("\n\t\tEnter a new student name: ", true));
+
+			int number = inputInteger("\n\t\tEnter the his/her level (1-Freshman, 2-Sophmore, 3-Junior, or 4-Senior): ", 1, 4);
+
+			newStudent.setGradeLevel(names[number - 1]);
+			newStudent.setGPA(inputDouble("\n\t\tEnter his/her GPA (0.0..4.0): ", 0.0, 4.0));
+
+			auto it = studentVector.begin() + 1;
+
+			studentVector.insert(it, newStudent);
+
+			cout << "\n\t\tThe new element has been inserted after the begin iterator.";
+
+			break;
+		}
+		case 'R': {
+			vector<Student> studentVector2;
+			cout << "\n\t\tvector (v2) is initially empty.\n";
+			studentVector2.swap(studentVector);
+
+			cout << "\n\t\tvector (v1) is empty after swapped with vector (v2).\n";
+			cout << "\n\t\tvector (v2) after swapped with vector (v1).\n";
+
+			for (int i = 0; i < studentVector2.size(); i++)
+				cout << "\t\t[" << i << "]" << studentVector2[i] << "\n";
+
+			break;
+		}
+		case 'S': {
+			if (studentVector.empty()) {
+				cout << "\n\tThe vector is empty.";
+				break;
+			}
+			cout << "\n\tVector has been sorted";
+
+			cout << endl;
+			sort(studentVector.begin(), studentVector.end());
+
+			for (int i = 0; i < studentVector.size(); i++)
+				cout << "\t\t[" << i << "]" << studentVector[i] << "\n";
+
+			break;
+		}
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
 		}
 		cout << "\n\n\t";
@@ -357,9 +484,7 @@ void listContainer()
 				break;
 			}
 
-			auto it = link_list.get_First_Iter();
-			
-			for (it = link_list.get_First_Iter(); it != link_list.get_Past_End_Iter(); it++)
+			for (auto it = link_list.get_First_Iter(); it != link_list.get_Past_End_Iter(); it++)
 			{
 				cout << "\n\t" << &it << " (" << *it << ")";
 			}
