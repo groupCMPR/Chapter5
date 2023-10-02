@@ -171,10 +171,97 @@ void caseOne() {
 			break;
 		}
 		//start new cases here 
-		//case 'K': {
+		// 
+		case 'K': {
+			vector <student>::iterator start;
+			cout << "\n\t\tUsing begin() and end(), the vector contains:\n";
+			for (start = studentVector.begin();start != studentVector.end(); ++start)
+				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
+			break;
+				  }
+		case 'L': {
+			vector <student>::iterator start;
+			start = studentVector.begin();
+			cout << *start;
+			break;
+		}
+		case 'M': {
+			vector <student>::iterator end;
+			end = studentVector.end();
 
+			cout << *end;
 
-		//  }
+			break;
+		}
+		case 'N': {
+			vector<student>::iterator start;
+
+			for (start = studentVector.begin(); start != studentVector.end();++start)
+				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
+
+			break;
+		}
+		case 'O': {
+			vector<student>::iterator start;
+			start = studentVector.begin();
+
+			studentVector.erase(start);
+
+			cout << "\n\tAn element after the begin iterator" << *start << "has been removed.\n";
+
+			break;
+		}
+		case 'P': {
+			vector<student>::iterator start; 
+			vector<student>::iterator end;
+
+			start = studentVector.begin();
+			end = studentVector.end();
+
+			studentVector.erase(start, end);
+
+			cout << "\n\t\tAN element after the begin iterator " << *start << " and going up to end iterator " << *end << " has been removed.\n";
+
+			break;
+		}
+		case 'Q': {
+			student newStudent;
+			string fullName;
+
+			cout << "\n\t\tEnter a new student name: ";
+			cin >> fullName;
+
+			newStudent.setName(fullName);
+
+			int gradeLevel = inputInteger("\n\t\tEnter the his/her level (1-Freshman, 2-Sophmore, 3-Junior, or 4-Senior): ", 1, 4);
+			double gpa = inputDouble("\n\t\tEnter his/her GPA (0.0..4.0): ", 0.0, 4.0);
+
+			cout << "\n\t\tThe new element has been inserted after the begin iterator."; 
+
+			break;
+		}
+		case 'R': {
+			vector<student> studentVector2; 
+			cout << "\n\t\tvector (v2) is initially empty.\n";
+			studentVector2.swap(studentVector); 
+
+			cout << "\n\t\tvector (v1) is empty after swapped with vector (v2).\n";
+			cout << "\n\t\tvector (v2) after swapped with vector (v1).\n";
+
+			for (int i = 0; i < studentVector2.size(); i++) 
+				cout << "\t\t[" << i << "]" << studentVector2[i] << "\n"; 
+
+			break;
+		}
+		case 'S': {
+			sort(studentVector.begin(), studentVector.end());
+
+			for (int i = 0; i < studentVector.size(); i++)
+				cout << "\t\t[" << i << "]" << studentVector[i] << "\n";
+
+			break;
+		}
+			
 
 		}
 		cout << "\n\n\t";
