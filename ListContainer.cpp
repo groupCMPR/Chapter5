@@ -17,21 +17,10 @@ void ListContainer::set_Clear() {
 	Student_List.clear();
 }
 //Precondition : Receives new size that must be from 1...100
-//Postcondition: Adds in elements if size is greater, pops elements if size is smaller
+//Postcondition: calls resize which Adds in elements if size is greater, pops elements if size is smaller
 //               or throws in error if anything unexpected occurs
 void ListContainer::set_Resize(const int& size) {
-
-	//for loop iterates until it is the same size
-	if (size < Student_List.size()) {
-		for (size_t i = Student_List.size(); i > size; --i)
-			Student_List.pop_back();
-	}
-	else if (size > Student_List.size()) {
-		for (size_t i = Student_List.size(); i < size; ++i)
-			Student_List.push_back(Student());
-	}
-	else
-		throw invalid_argument("ERROR: could not be resized");
+	Student_List.resize(size);
 }
 //Precondition : Class student, bool choice 
 //Postcondition: Pushes class into list, if true pushes it to front, false pushes it back
