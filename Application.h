@@ -1,5 +1,3 @@
-//Names: Alexis Martinez & Angie Campos
-//Date: 9/28/2023
 //Description: Header file for class Application
 
 #pragma once
@@ -7,6 +5,7 @@
 #include <map>      //For maps, used in frequencies
 #include <iostream> //For overloaded function
 #include <sstream>  //For displaying data types, used in frequencies
+#include <algorithm> //for find
 #include <string>   //For string
 using namespace std;
 
