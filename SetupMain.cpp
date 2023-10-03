@@ -598,7 +598,7 @@ void listContainer()
 			studentList2.swap(studentList);
 
 			cout << "\n\t\tlist (l1) is empty after swapped with list (l2).\n";
-			cout << "\n\t\tlist (l2) now has" << studentList2.size() << "element(s).\n";
+			cout << "\n\t\tlist (l2) now has " << studentList2.size() << " element(s).\n";
 
 		}break;
 		case 'S':
