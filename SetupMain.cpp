@@ -616,9 +616,8 @@ void vectorAndOrListContainer()
 		case 'A': list_Apply.set_List(inputInteger("\n\tAdd an integer: ")); break;
 		case 'B': {
 			//if value is not in list, error
-			int user_Value = inputInteger("\n\t Delete an integer: ");
 			try {
-				list_Apply.delete_List(user_Value);
+				list_Apply.delete_List(inputInteger("\n\t Delete an integer: "));
 			}
 			catch (const invalid_argument& error) {
 				cout << "\n\t" << error.what() << to_string(user_Value) << ".";
