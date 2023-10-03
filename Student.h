@@ -1,6 +1,6 @@
 //Names: Neidy Malaga & Vivian Huynh
 //Date: 9/25/2023
-//Description: Derived header file for class Student
+//Description: Header file for class Student
 
 #pragma once
 #include <string>   //For string
