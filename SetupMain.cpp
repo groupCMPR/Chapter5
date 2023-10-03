@@ -4,18 +4,18 @@
 //Group 1 Vectors: Alexis and Angie
 //Group 2 List: Vivian and Neidy
 //Group 3 Application: Neidy
-//Vivian organized the main.cpp. Each group did their section of the main.cpp as well as their header and cpp file.
+//Vivian organized the main.cpp. Each group did their section of the main.cpp
 
 #include <iostream> //For cout
 #include <vector>   //For vector
 #include <fstream>  //For files
 #include <sstream>  //For tokenizing 
+#include <list>     //For list
 
 //HEADER FILES
-#include "input.h"         //For input validation
-#include "ListContainer.h" //For option 2
-#include "Student.h"   //Derived class
-#include "Application.h"   //For option 3
+#include "input.h"       //For input validation
+#include "Student.h"     //Class for option 1 and 2
+#include "Application.h" //For option 3
 using namespace std;
 
 //==================================================================================================================
@@ -30,7 +30,8 @@ char caseOneMenu();
 
 //Option 2 - List Container
 void listContainer();
-void fill_list(ListContainer&, const bool&);
+void fill_list(list<Student>&, const bool&);
+void displayList(list<Student>&);
 char caseTwoMenu();
 
 //Option 3 - Application using Vector and/or List container
@@ -83,11 +84,11 @@ int mainMenu()
 //returns begin iterator, returns end iterator, returns all elements, returns rbegin iterator, returns rend iterator,
 //returns all elements in reverse order, removes one element, removes element from one iterator to other iterator,
 //inserts new entry, swaps with another vector, sorts the list
-void vectorContainer()
-{
+void vectorContainer() {
 	vector<Student> studentVector;
 
-	do {
+	do 
+	{
 		system("cls");
 		switch (caseOneMenu()) {
 		case '0': return;
@@ -110,9 +111,10 @@ void vectorContainer()
 
 		case 'D': {
 			ifstream file;
+
 			file.open("input.dat");
 
-			if (!file.is_open()) {
+			if (!file) {
 				cout << "\n\tError opening file 'input.dat'." << endl;
 				break;
 			}
@@ -212,6 +214,7 @@ void vectorContainer()
 
 			break;
 		}
+
 		case 'K': {
 			if (studentVector.empty()) {
 				cout << "\n\tThe vector is empty.";
@@ -238,7 +241,8 @@ void vectorContainer()
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector <Student>::reverse_iterator end = studentVector.rend();
+			vector <Student>::reverse_iterator end;
+			end = studentVector.rend();
 
 			cout << "\n\tThe reverse iterator pointing to the theoretical element preceding the first element in the vector: " << &end;
 
@@ -249,10 +253,11 @@ void vectorContainer()
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
+			vector<Student>::reverse_iterator start;
 
 			cout << "\n\tUsing rbegin() and rend(), the vector contains reversed elments: " << endl;
 
-			for (vector<Student>::reverse_iterator start = studentVector.rbegin(); start != studentVector.rend(); ++start)
+			for (start = studentVector.rbegin(); start != studentVector.rend(); ++start)
 				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
 
 			break;
@@ -262,7 +267,8 @@ void vectorContainer()
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector<Student>::iterator start = studentVector.begin() + 1;
+			vector<Student>::iterator start;
+			start = studentVector.begin() + 1;
 
 			studentVector.erase(start);
 
@@ -275,8 +281,11 @@ void vectorContainer()
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector<Student>::iterator start = studentVector.begin();
-			vector<Student>::iterator end = studentVector.end();
+			vector<Student>::iterator start;
+			vector<Student>::iterator end;
+
+			start = studentVector.begin();
+			end = studentVector.end();
 
 			studentVector.erase(start, end);
 
@@ -292,9 +301,7 @@ void vectorContainer()
 			}
 
 			Student newStudent;
-
 			string names[] = { "Freshman", "Sophmore", "Junior", "Senior" };
-
 
 			newStudent.setName(inputString("\n\t\tEnter a new student name: ", true));
 
@@ -339,15 +346,13 @@ void vectorContainer()
 
 			break;
 		}
-		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
 		}
 		cout << "\n\n\t";
 		system("pause");
 	} while (true);
 }
-
-//Precondition : Passing vector 
-//Postcondition: Displays size and contents of vectors
+//Precondition : Passing in studentVector
+//Postcondition: Displaying the elements in the vector 
 void displayVector(vector<Student>& studentVector) {
 	cout << "\n\tThe vector now has " << studentVector.size() << " elements.";
 	cout << endl;
@@ -400,7 +405,9 @@ char caseOneMenu() {
 //inserts new entry, swaps with another list, sorts the list
 void listContainer()
 {
-	ListContainer link_list;
+	list<Student> studentList;
+	int size = 0;
+
 	do
 	{
 		system("cls");
@@ -408,109 +415,208 @@ void listContainer()
 		{
 		case '0': return;
 		case 'A': {
-			link_list.set_Clear();
+			studentList.clear();
 			cout << "\n\tThe list has been cleared.";
 		}; break;
-		case 'B': link_list.set_Resize(inputInteger("\n\tEnter the new size(1..100):", 1, 100)); break;
-		case 'C': fill_list(link_list, true); break;
+		case 'B': {
+			//if cannot be resized, error
+			try {
+				size = inputInteger("\n\tEnter the new size(1..100): ", 1, 100);
+
+				if (size < studentList.size()) {
+					for (size_t i = studentList.size(); i > size; --i)
+						studentList.pop_back();
+				}
+				else if (size > studentList.size()) {
+					for (size_t i = studentList.size(); i < size; ++i)
+						studentList.push_back(Student());
+				}
+				else
+					throw invalid_argument("ERROR: could not be resized");
+			}
+			catch (const invalid_argument& error) {
+				cout << "\n\t" << error.what();
+			}
+		} break;
+		case 'C': fill_list(studentList, true); break;
 		case 'D': {
-			if (link_list.get_Empty()) {
-				cout << "\n\tList is empty.";
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
 				break;
 			}
-			cout << "\n\tFirst element, (" << link_list.get_Front() << "), has been removed from the list";
-			link_list.set_Pop_Front();
-			cout << "\n\tThe list now has " << link_list.get_Size() << " elements\n";
-			cout << link_list;
+
+			cout << "\n\tFirst element, (" << studentList.front() << "), has been removed from the list\n";
+			studentList.pop_front();
+			cout << "\n\tThe list now has " << studentList.size() << " elements\n";
+			displayList(studentList);
 		};  break;
 		case 'E': {
-			if (link_list.get_Empty()) {
-				cout << "\n\tList is empty.";
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
 				break;
 			}
 
-			cout << "\n\tFirst element from the list is (" << link_list.get_Front() << ").";
+			cout << "\n\tFirst element from the list is (" << studentList.front() << ").\n";
 
 		}break;
-		case 'F': fill_list(link_list, false); break;
+		case 'F': fill_list(studentList, false); break;
 		case 'G': {
-			if (link_list.get_Empty()) {
-				cout << "\n\tList is empty.";
-				break;
-			}
-			cout << "\n\tLast element, (" << link_list.get_Back() << "), has been removed from the list";
-			link_list.set_Pop_Back();
-			cout << "\n\tThe list now has " << link_list.get_Size() << " elements\n";
-			cout << link_list;
-		} break;
-		case 'H': {
-			if (link_list.get_Empty()) {
-				cout << "\n\tList is empty.";
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
 				break;
 			}
 
-			cout << "\n\tLast element from the list is (" << link_list.get_Back() << ").";
+			cout << "\n\tLast element, (" << studentList.back() << "), has been removed from the list";
+			studentList.pop_back();
+			cout << "\n\tThe list now has " << studentList.size() << " elements\n";
+			displayList(studentList);
+		} break;
+		case 'H': {
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
+				break;
+			}
+
+			cout << "\n\tLast element from the list is (" << studentList.back() << ").\n";
 
 		} break;
 		case 'I': {
-			if (link_list.get_Empty()) {
-				cout << "\n\tList is empty.";
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
 				break;
 			}
 
-			cout << "\n\tThe iterator referring the first element: " << &(*link_list.get_First_Iter()) << " (" << (*link_list.get_First_Iter()) << ").";
+			cout << "\n\tThe iterator referring the first element: " << &(*studentList.begin()) << " (" << (*studentList.begin()) << ").\n";
 
 		} break;
 		case 'J': {
-			if (link_list.get_Empty()) {
-				cout << "\n\tList is empty.";
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
 				break;
 			}
 
-			cout << "\n\tThe iterator referring to the past-the-end element: " << &(*link_list.get_Past_End_Iter()) << " (" << (*link_list.get_Past_End_Iter()) << ").";
+			auto it = studentList.end();
+			cout << "\n\tThe iterator referring to the past-the-end element: " << &it << '\n';
 
 		}break;
 		case 'K': {
-			if (link_list.get_Empty()) {
-				cout << "\n\tList is empty.";
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
 				break;
 			}
 
-			for (auto it = link_list.get_First_Iter(); it != link_list.get_Past_End_Iter(); it++)
+			auto it = studentList.begin();
+			
+			for (it = studentList.begin(); it != studentList.end(); it++)
 			{
 				cout << "\n\t" << &it << " (" << *it << ")";
 			}
+			cout << '\n';
 		}break;
 		case 'L': {
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
+				break;
+			}
+
+			cout << "\n\tThe iterator referring the reverse first element: " << &(*studentList.rbegin()) << " (" << *studentList.rbegin() << ").\n";
 
 		}break;
-		case 'M':
-		{
+		case 'M': {
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
+				break;
+			}
 
+			auto it = studentList.rend();
+			cout << "\n\tThe iterator referring to the reverse past-the-end element: " << &it << '\n';
 		}break;
-		case 'N':
-		{
+		case 'N': {
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
+				break;
+			}
 
-		}break;
-		case 'O':
-		{
+			auto it = studentList.rbegin();
 
+			for (it = studentList.rbegin(); it != studentList.rend(); it++)
+			{
+				cout << "\n\t" << &it << " (" << *it << ")";
+			}
+			cout << '\n';
 		}break;
-		case 'P':
-		{
+		case 'O': {
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
+				break;
+			}
 
+			auto it = studentList.begin();
+			studentList.erase(it);
+
+			cout << "\n\tAn element after the begin iterator " << &(*studentList.begin()) << " has been removed.\n";
 		}break;
-		case 'Q':
-		{
+		case 'P': {
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
+				break;
+			}
+
+			auto it = studentList.end();
+			cout << "\n\tAll elements starting at begin iterator " << &(*studentList.begin()) << " and going up to end iterator " << &it << "\n\thave been removed.\n";
+
+			auto start_it = studentList.begin();
+			auto end_it = studentList.end();
+
+			studentList.erase(start_it, end_it);
+		}break;
+		case 'Q': {
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
+				break;
+			}
+
+			Student entry;
+			string names[] = { "Freshman", "Sophmore", "Junior", "Senior" };
+			int level = 0;
+
+			entry.setName(inputString("\n\tEnter a new student name: ", true));
+			level = inputInteger("\tEnter the his/her level (1-Freshman, 2-Sophmore, 3-Junior, or 4-Senior): ", 1, 4);
+			entry.setGradeLevel(names[level - 1]);
+			entry.setGPA(inputDouble("\tEnter his/her GPA (0.0..4.0): ", 0.0, 4.0));
+			
+			auto it = studentList.begin();
+			studentList.insert(it, entry);
+
+			cout << "\n\tThe new element has been inserted after the begin iterator.\n";
 
 		}break;
 		case 'R':
 		{
+			list<Student> studentList2;
+			cout << "\n\t\tlist (l2) is initially empty.\n";
+			studentList2.swap(studentList);
+
+			cout << "\n\t\tlist (l1) is empty after swapped with list (l2).\n";
+			cout << "\n\t\tlist (l2) now has" << studentList2.size() << "element(s).\n";
 
 		}break;
 		case 'S':
 		{
+			if (studentList.empty()) {
+				cout << "\n\tList is empty.\n";
+				break;
+			}
 
+			cout << "\n\tSorted list:";
+
+			auto i = studentList.begin();
+			studentList.sort();
+
+			for (i = studentList.begin(); i != studentList.end(); i++) {
+				cout << "\n\t\t" << &(*i) << " " << (*i);
+			}
+			cout << '\n';
 		}break;
 		default: cout << "\t\tERROR: - Invalid option. Please re-enter"; break;
 		}
@@ -519,9 +625,9 @@ void listContainer()
 	} while (true);
 }
 
-//Precondition : Call from listContainer, needs class and bool
+//Precondition : Passing in studentList, needs class and bool
 //Postcondition: Pushes elements from file to front or back 
-void fill_list(ListContainer& link_list, const bool& front_or_back) {
+void fill_list(list<Student>& studentList, const bool& front_or_back) {
 	string file_Name = inputString("\n\tInput name of file (input.dat): ", false);
 	string line;
 
@@ -555,12 +661,25 @@ void fill_list(ListContainer& link_list, const bool& front_or_back) {
 			getline(stream, tokenize[i], ',');
 		}
 
-		link_list.set_List(Student(tokenize[0], tokenize[1], stod(tokenize[2])), front_or_back);
+		switch (front_or_back) {
+		case true: studentList.push_front(Student(tokenize[0], tokenize[1], stod(tokenize[2]))); break;
+		case false: studentList.push_back(Student(tokenize[0], tokenize[1], stod(tokenize[2]))); break;
+		}
 	}
 
 	input_File.close();
 
-	cout << "\n\tThe list now has " << link_list.get_Size() << " elements.";
+	cout << "\n\tThe list now has " << studentList.size() << " elements.";
+}
+
+//Precondition : Passing in studentList
+//Postcondition: Displaying all the elements in the list
+void displayList(list<Student>& studentList) {
+	auto i = studentList.begin();
+ 	for (i = studentList.begin(); i != studentList.end(); i++) {
+		cout << "\n\t\t" << (*i);
+	}
+	cout << '\n';
 }
 
 //Precondition : Called from listContainer
