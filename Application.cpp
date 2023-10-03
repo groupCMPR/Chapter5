@@ -1,5 +1,3 @@
-//Names: Alexis Martinez & Angie Campos
-//Date: 9/28/2023
 //Description: cpp file for class Application
 
 #include "Application.h"
