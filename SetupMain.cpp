@@ -411,15 +411,7 @@ void listContainer()
 			link_list.set_Clear();
 			cout << "\n\tThe list has been cleared.";
 		}; break;
-		case 'B': {
-			//if cannot be resized, error
-			try {
-				link_list.set_Resize(inputInteger("\n\tEnter the new size(1..100):", 1, 100));
-			}
-			catch (const invalid_argument& error) {
-				cout << "\n\t" << error.what();
-			}
-		} break;
+		case 'B': link_list.set_Resize(inputInteger("\n\tEnter the new size(1..100):", 1, 100)); break;
 		case 'C': fill_list(link_list, true); break;
 		case 'D': {
 			if (link_list.get_Empty()) {
