@@ -1,6 +1,6 @@
 //Names: Neidy Malaga & Vivian Huynh
 //Date: 9/25/2023
-//Description: Derived cpp file for class Student
+//Description: cpp file for class Student
 
 #include "Student.h"
 
