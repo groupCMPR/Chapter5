@@ -5,7 +5,13 @@
 //Group 2 List: Vivian and Neidy
 //Group 3 Application: Neidy
 //Vivian organized the main.cpp. Each group did their section of the main.cpp
-
+//The purpose of this program is to exercise our skills in using vectors and list. It also provides
+//an idea of how the vectors and lists are coded in to the stl, which helps the group figure out the 
+//processes of how they were developed. In addition, our program used most of all the member functions provided by the 
+//standard template library to do a variety of things like pop_back, push_back, swap, and sort. We also used iterators
+//to display all the elements and pointers to find one element. We then displayed those elements and their addresses.
+//In addition, we also used composition, as we put the class element into the list and in the vector where the valid
+//data type would be. 
 #include <iostream> //For cout
 #include <vector>   //For vector
 #include <fstream>  //For files
