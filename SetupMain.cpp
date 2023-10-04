@@ -4,7 +4,7 @@
 //Group 1 Vectors: Alexis and Angie
 //Group 2 List: Vivian and Neidy
 //Group 3 Application: Neidy
-//Vivian organized the main.cpp. Each group did their section of the main.cpp.
+//Vivian organized the main.cpp. Each group did their section of the main.cpp
 
 #include <iostream> //For cout
 #include <vector>   //For vector
@@ -621,9 +621,10 @@ void fill_list(list<Student>& studentList, const bool& front_or_back) {
 	while (getline(input_File, line)) {
 		istringstream stream(line);
 		int level = 0;
-		string tokenize[3];
+		const int SIZE = 3;
+		string tokenize[SIZE];
 
-		for (int i = 0; i < 3; ++i) {
+		for (int i = 0; i < SIZE; ++i) {
 			getline(stream, tokenize[i], ',');
 		}
 
