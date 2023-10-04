@@ -70,7 +70,7 @@ int main()
 //Posctondition: Returns integer choice
 int mainMenu()
 {
-	cout << "\n\t CMPR131 Chapter 5: Vector and List Container by Group 5 () 9/25/2023";
+	cout << "\n\t CMPR131 Chapter 5: Vector and List Container by Group 5 - 9/25/2023";
 	cout << "\n\t" << string(100, char(205));
 	cout << "\n\t\t1> Vector container";
 	cout << "\n\t\t2> List container";
@@ -202,7 +202,7 @@ void vectorContainer() {
 			auto it = studentVector.begin();
 
 			cout << "\n\tThe iterator referring the first element: ";
-			cout << &it;
+			cout << &(*it);
 			cout << "(" << *it << ")";
 
 			break;
@@ -228,7 +228,7 @@ void vectorContainer() {
 			}
 
 			cout << "\n\t\tUsing begin() and end(), the vector contains:\n";
-			for (vector <Student>::iterator  start = studentVector.begin(); start != studentVector.end(); ++start)
+			for (vector <Student>::iterator start = studentVector.begin(); start != studentVector.end(); ++start)
 				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
 
 			break;
@@ -239,7 +239,7 @@ void vectorContainer() {
 				break;
 			}
 			auto it = studentVector.rbegin();
-			cout << "\n\t\tThe reverse iterator pointing to the last element:" << &it << " " << "(" << *it << ")";
+			cout << "\n\t\tThe reverse iterator pointing to the last element:" << &(*it) << " " << "(" << *it << ")";
 			break;
 		}
 		case 'M': {
@@ -261,15 +261,15 @@ void vectorContainer() {
 
 			cout << "\n\tUsing rbegin() and rend(), the vector contains reversed elments: " << endl;
 
-			for (vector<Student>::reverse_iterator  start = studentVector.rbegin(); start != studentVector.rend(); ++start)
+			for (vector<Student>::reverse_iterator start = studentVector.rbegin(); start != studentVector.rend(); ++start)
 				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
 
 			break;
 		}
 		case 'O': {
 			if (studentVector.empty()) {
-			    cout << "\n\tThe vector is empty.";
-			    break;
+				cout << "\n\tThe vector is empty.";
+				break;
 			}
 			vector<Student>::iterator start = studentVector.begin() + 1;
 
@@ -485,7 +485,7 @@ void listContainer()
 				break;
 			}
 
-			for (auto it = studentList.begin(); it != studentList.end(); it++){
+			for (auto it = studentList.begin(); it != studentList.end(); it++) {
 				cout << "\n\t" << &it << " (" << *it << ")";
 			}
 			cout << '\n';
@@ -514,7 +514,7 @@ void listContainer()
 				break;
 			}
 
-			for (auto it = studentList.rbegin(); it != studentList.rend(); ++it){
+			for (auto it = studentList.rbegin(); it != studentList.rend(); ++it) {
 				cout << "\n\t" << &it << " (" << *it << ")";
 			}
 			cout << '\n';
