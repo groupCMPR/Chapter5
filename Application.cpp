@@ -1,3 +1,5 @@
+//Names: Neidy Malaga
+//Date: 9/28/2023
 //Description: cpp file for class Application
 
 #include "Application.h"
