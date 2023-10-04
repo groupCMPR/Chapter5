@@ -268,14 +268,14 @@ void vectorContainer() {
 		}
 		case 'O': {
 			if (studentVector.empty()) {
-				cout << "\n\tThe vector is empty.";
-				break;
+			    cout << "\n\tThe vector is empty.";
+			    break;
 			}
 			vector<Student>::iterator start = studentVector.begin() + 1;
 
-			studentVector.erase(start);
+			cout << "\n\tAn element after the begin iterator " << &(*start) << " has been removed.\n";
 
-			cout << "\n\tAn element after the begin iterator " << &start << " has been removed.\n";
+			studentVector.erase(start);
 
 			break;
 		}
@@ -287,9 +287,9 @@ void vectorContainer() {
 			vector<Student>::iterator start = studentVector.begin();
 			vector<Student>::iterator end = studentVector.end();
 
-			studentVector.erase(start, end);
+			cout << "\n\t\tAll elements starting at begin iterator " << &(*start) << " and going up to end iterator " << &(end) << " has been removed.\n";
 
-			cout << "\n\t\tAll elements starting at begin iterator " << &start << " and going up to end iterator " << &end << " has been removed.\n";
+			studentVector.erase(start, end);
 
 			break;
 		}
