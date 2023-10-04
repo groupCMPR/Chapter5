@@ -486,7 +486,7 @@ void listContainer()
 			}
 
 			for (auto it = studentList.begin(); it != studentList.end(); it++) {
-				cout << "\n\t" << &it << " (" << *it << ")";
+				cout << "\n\t" << &(*it) << " (" << *it << ")";
 			}
 			cout << '\n';
 		}break;
