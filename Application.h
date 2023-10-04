@@ -1,3 +1,5 @@
+//Names: Neidy Malaga
+//Date: 9/28/2023
 //Description: Header file for class Application
 
 #pragma once
