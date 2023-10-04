@@ -4,7 +4,7 @@
 //Group 1 Vectors: Alexis and Angie
 //Group 2 List: Vivian and Neidy
 //Group 3 Application: Neidy
-//Vivian organized the main.cpp. Each group did their section of the main.cpp
+//Vivian organized the main.cpp. Each group did their section of the main.cpp.
 
 #include <iostream> //For cout
 #include <vector>   //For vector
@@ -87,7 +87,7 @@ int mainMenu()
 void vectorContainer() {
 	vector<Student> studentVector;
 
-	do 
+	do
 	{
 		system("cls");
 		switch (caseOneMenu()) {
@@ -178,7 +178,7 @@ void vectorContainer() {
 				break;
 			}
 
-			int limit = studentVector.size() - 1;
+			int limit = static_cast<int>(studentVector.size()) - 1;
 
 			int number = inputInteger("\n\tEnter the index(0.." + to_string(limit) + "): ", 0, limit);
 
@@ -220,9 +220,9 @@ void vectorContainer() {
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector <Student>::iterator start;
+
 			cout << "\n\t\tUsing begin() and end(), the vector contains:\n";
-			for (start = studentVector.begin(); start != studentVector.end(); ++start)
+			for (vector <Student>::iterator  start = studentVector.begin(); start != studentVector.end(); ++start)
 				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
 
 			break;
@@ -241,8 +241,7 @@ void vectorContainer() {
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector <Student>::reverse_iterator end;
-			end = studentVector.rend();
+			vector <Student>::reverse_iterator end = studentVector.rend();
 
 			cout << "\n\tThe reverse iterator pointing to the theoretical element preceding the first element in the vector: " << &end;
 
@@ -253,11 +252,10 @@ void vectorContainer() {
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector<Student>::reverse_iterator start;
 
 			cout << "\n\tUsing rbegin() and rend(), the vector contains reversed elments: " << endl;
 
-			for (start = studentVector.rbegin(); start != studentVector.rend(); ++start)
+			for (vector<Student>::reverse_iterator  start = studentVector.rbegin(); start != studentVector.rend(); ++start)
 				cout << "\t\t" << addressof(*start) << "(" << *start << ")\n";
 
 			break;
@@ -267,8 +265,7 @@ void vectorContainer() {
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector<Student>::iterator start;
-			start = studentVector.begin() + 1;
+			vector<Student>::iterator start = studentVector.begin() + 1;
 
 			studentVector.erase(start);
 
@@ -281,11 +278,8 @@ void vectorContainer() {
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector<Student>::iterator start;
-			vector<Student>::iterator end;
-
-			start = studentVector.begin();
-			end = studentVector.end();
+			vector<Student>::iterator start = studentVector.begin();
+			vector<Student>::iterator end = studentVector.end();
 
 			studentVector.erase(start, end);
 
@@ -406,7 +400,6 @@ char caseOneMenu() {
 void listContainer()
 {
 	list<Student> studentList;
-	int size = 0;
 
 	do
 	{
@@ -418,26 +411,7 @@ void listContainer()
 			studentList.clear();
 			cout << "\n\tThe list has been cleared.";
 		}; break;
-		case 'B': {
-			//if cannot be resized, error
-			try {
-				size = inputInteger("\n\tEnter the new size(1..100): ", 1, 100);
-
-				if (size < studentList.size()) {
-					for (size_t i = studentList.size(); i > size; --i)
-						studentList.pop_back();
-				}
-				else if (size > studentList.size()) {
-					for (size_t i = studentList.size(); i < size; ++i)
-						studentList.push_back(Student());
-				}
-				else
-					throw invalid_argument("ERROR: could not be resized");
-			}
-			catch (const invalid_argument& error) {
-				cout << "\n\t" << error.what();
-			}
-		} break;
+		case 'B': studentList.resize(inputInteger("\n\tEnter the new size(1..100): ", 1, 100)); break;
 		case 'C': fill_list(studentList, true); break;
 		case 'D': {
 			if (studentList.empty()) {
@@ -496,7 +470,7 @@ void listContainer()
 			}
 
 			auto it = studentList.end();
-			cout << "\n\tThe iterator referring to the past-the-end element: " << &it << '\n';
+			cout << "\n\tThe iterator referring to the past-the-end element: " << &(it) << '\n';
 
 		}break;
 		case 'K': {
@@ -505,10 +479,7 @@ void listContainer()
 				break;
 			}
 
-			auto it = studentList.begin();
-			
-			for (it = studentList.begin(); it != studentList.end(); it++)
-			{
+			for (auto it = studentList.begin(); it != studentList.end(); it++){
 				cout << "\n\t" << &it << " (" << *it << ")";
 			}
 			cout << '\n';
@@ -537,10 +508,7 @@ void listContainer()
 				break;
 			}
 
-			auto it = studentList.rbegin();
-
-			for (it = studentList.rbegin(); it != studentList.rend(); it++)
-			{
+			for (auto it = studentList.rbegin(); it != studentList.rend(); ++it){
 				cout << "\n\t" << &it << " (" << *it << ")";
 			}
 			cout << '\n';
@@ -568,7 +536,7 @@ void listContainer()
 			auto start_it = studentList.begin();
 			auto end_it = studentList.end();
 
-			studentList.erase(start_it, end_it);
+			studentList.erase(studentList.begin(), studentList.end());
 		}break;
 		case 'Q': {
 			if (studentList.empty()) {
@@ -584,9 +552,8 @@ void listContainer()
 			level = inputInteger("\tEnter the his/her level (1-Freshman, 2-Sophmore, 3-Junior, or 4-Senior): ", 1, 4);
 			entry.setGradeLevel(names[level - 1]);
 			entry.setGPA(inputDouble("\tEnter his/her GPA (0.0..4.0): ", 0.0, 4.0));
-			
-			auto it = studentList.begin();
-			studentList.insert(it, entry);
+
+			studentList.insert(studentList.begin(), entry);
 
 			cout << "\n\tThe new element has been inserted after the begin iterator.\n";
 
@@ -610,10 +577,9 @@ void listContainer()
 
 			cout << "\n\tSorted list:";
 
-			auto i = studentList.begin();
 			studentList.sort();
 
-			for (i = studentList.begin(); i != studentList.end(); i++) {
+			for (auto i = studentList.begin(); i != studentList.end(); i++) {
 				cout << "\n\t\t" << &(*i) << " " << (*i);
 			}
 			cout << '\n';
@@ -676,7 +642,7 @@ void fill_list(list<Student>& studentList, const bool& front_or_back) {
 //Postcondition: Displaying all the elements in the list
 void displayList(list<Student>& studentList) {
 	auto i = studentList.begin();
- 	for (i = studentList.begin(); i != studentList.end(); i++) {
+	for (i = studentList.begin(); i != studentList.end(); i++) {
 		cout << "\n\t\t" << (*i);
 	}
 	cout << '\n';
