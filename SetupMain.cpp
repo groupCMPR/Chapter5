@@ -11,7 +11,8 @@
 //standard template library to do a variety of things like pop_back, push_back, swap, and sort. We also used iterators
 //to display all the elements and pointers to find one element. We then displayed those elements and their addresses.
 //In addition, we also used composition, as we put the class element into the list and in the vector where the valid
-//data type would be. 
+//data type would be.
+//  
 #include <iostream> //For cout
 #include <vector>   //For vector
 #include <fstream>  //For files
@@ -271,11 +272,18 @@ void vectorContainer() {
 				cout << "\n\tThe vector is empty.";
 				break;
 			}
-			vector<Student>::iterator start = studentVector.begin() + 1;
-
-			cout << "\n\tAn element after the begin iterator " << &(*start) << " has been removed.\n";
-
-			studentVector.erase(start);
+			vector<Student>::iterator start = studentVector.begin();
+			
+			if (studentVector.size() == 1) {
+				cout << "\n\tAn element at the begin iterator " << &(*start) << " has been removed.\n";
+				studentVector.erase(start);
+			}
+			else {
+				cout << "\n\tAn element after the begin iterator " << &(*start) << " has been removed.\n";
+				++start;
+				studentVector.erase(start);
+				
+			}
 
 			break;
 		}
@@ -307,11 +315,11 @@ void vectorContainer() {
 
 			if (studentVector.empty()) {
 				studentVector.insert(studentVector.begin() , newStudent);
-				cout << "\n\t\tThe new element has been inserted after the begin iterator.";
+				cout << "\n\t\tThe new element has been inserted at the begin iterator.";
 			}
 			else {
 				studentVector.insert(studentVector.begin() + 1, newStudent);
-				cout << "\n\t\tThe new element has been inserted at the begin iterator.";
+				cout << "\n\t\tThe new element has been inserted after the begin iterator.";
 			}
 
 			break;
@@ -524,9 +532,17 @@ void listContainer()
 			}
 
 			auto it = studentList.begin();
-			studentList.erase(it);
 
-			cout << "\n\tAn element after the begin iterator " << &(*studentList.begin()) << " has been removed.\n";
+			if (studentList.size() == 1) {
+				cout << "\n\tAn element at the begin iterator " << &(*it) << " has been removed.\n";
+				studentList.erase(it);
+			}
+			else {
+				cout << "\n\tAn element after the begin iterator " << &(*it) << " has been removed.\n";
+				++it;
+				studentList.erase(it);
+
+			}
 		}break;
 		case 'P': {
 			if (studentList.empty()) {
@@ -553,9 +569,18 @@ void listContainer()
 			entry.setGradeLevel(names[level - 1]);
 			entry.setGPA(inputDouble("\tEnter his/her GPA (0.0..4.0): ", 0.0, 4.0));
 
-			studentList.insert(studentList.begin(), entry);
 
-			cout << "\n\tThe new element has been inserted after the begin iterator.\n";
+			if (studentList.empty()) {
+				studentList.insert(studentList.begin(), entry);
+				cout << "\n\t\tThe new element has been inserted at the begin iterator.";
+			}
+			else {
+				auto iterator = studentList.begin();
+				++iterator;
+				studentList.insert(iterator, entry);
+				cout << "\n\t\tThe new element has been inserted after the begin iterator.";
+			}
+
 
 		}break;
 		case 'R':
