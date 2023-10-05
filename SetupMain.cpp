@@ -295,11 +295,6 @@ void vectorContainer() {
 		}
 		case 'Q': {
 
-			if (studentVector.empty()) {
-				cout << "\n\tThe vector is empty.";
-				break;
-			}
-
 			Student newStudent;
 			string names[] = { "Freshman", "Sophmore", "Junior", "Senior" };
 
@@ -310,11 +305,14 @@ void vectorContainer() {
 			newStudent.setGradeLevel(names[number - 1]);
 			newStudent.setGPA(inputDouble("\n\t\tEnter his/her GPA (0.0..4.0): ", 0.0, 4.0));
 
-			auto it = studentVector.begin() + 1;
-
-			studentVector.insert(it, newStudent);
-
-			cout << "\n\t\tThe new element has been inserted after the begin iterator.";
+			if (studentVector.empty()) {
+				studentVector.insert(studentVector.begin() , newStudent);
+				cout << "\n\t\tThe new element has been inserted after the begin iterator.";
+			}
+			else {
+				studentVector.insert(studentVector.begin() + 1, newStudent);
+				cout << "\n\t\tThe new element has been inserted at the begin iterator.";
+			}
 
 			break;
 		}
@@ -545,10 +543,6 @@ void listContainer()
 			studentList.erase(studentList.begin(), studentList.end());
 		}break;
 		case 'Q': {
-			if (studentList.empty()) {
-				cout << "\n\tList is empty.\n";
-				break;
-			}
 
 			Student entry;
 			string names[] = { "Freshman", "Sophmore", "Junior", "Senior" };
@@ -626,7 +620,6 @@ void fill_list(list<Student>& studentList, const bool& front_or_back) {
 	//if true will set as push front, false is push back 
 	while (getline(input_File, line)) {
 		istringstream stream(line);
-		int level = 0;
 		const int SIZE = 3;
 		string tokenize[SIZE];
 
@@ -648,8 +641,7 @@ void fill_list(list<Student>& studentList, const bool& front_or_back) {
 //Precondition : Passing in studentList
 //Postcondition: Displaying all the elements in the list
 void displayList(list<Student>& studentList) {
-	auto i = studentList.begin();
-	for (i = studentList.begin(); i != studentList.end(); i++) {
+	for (auto i = studentList.begin(); i != studentList.end(); i++) {
 		cout << "\n\t\t" << (*i);
 	}
 	cout << '\n';
