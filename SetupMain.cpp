@@ -734,7 +734,7 @@ void vectorAndOrListContainer()
 			}
 		}break;
 		case 'C': {
-			if (list_Apply.get_Empty()) {
+			if (list_Apply.is_Empty()) {
 				cout << "\n\tERROR: Empty List. Please input integer (Option A)";
 				break;
 			}
@@ -742,7 +742,7 @@ void vectorAndOrListContainer()
 			cout << list_Apply;
 		}; break;
 		case 'D': {
-			if (list_Apply.get_Empty()) {
+			if (list_Apply.is_Empty()) {
 				cout << "\n\tERROR: Empty List. Please input integer (Option A)";
 				break;
 			}
