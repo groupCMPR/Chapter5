@@ -9,6 +9,7 @@
 #include <sstream>  //For displaying data types, used in frequencies
 #include <algorithm> //for find
 #include <string>   //For string
+
 using namespace std;
 
 class Application {
@@ -17,17 +18,16 @@ private:
 	list<value_type> user_val_list;
 
 public:
-	//CONSTRUCTOR
-	Application(); //Default
+	//Default constructor
+	Application(); 
 
-	//MUTATORS
+	//MUTATOR:
 	void set_List(const value_type&);
 	void delete_List(const value_type&);
 
-	//ACCESSORS
-	bool get_Empty() const;
+	//ACCESSOR:
+	bool is_Empty() const;
 	string get_Freq() const;
 
-	//FRIEND
-	friend ostream& operator <<(ostream& out, const Application&);
+	friend ostream& operator <<(ostream& out, const Application &);
 };
